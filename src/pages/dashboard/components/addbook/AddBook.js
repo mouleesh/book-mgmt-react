@@ -31,31 +31,31 @@ export class AddBook extends Component {
 
 
     getBookId() {
-        const bookIDPrefix = "BK";
-        let bookID;
+        const bookIdPrefix = "BK";
+        let bookId;
         let unique = false;
         let i;
         let checkBookId = (bookid) => {
             return this.state.bookDetails.findIndex((book) => {
-                return book.bookID === bookid;
+                return book.bookId === bookid;
             });
         };
         for (i = 0; i < 10 || unique; i++) {
-            const bookIDSufix = Math.floor(Math.random() * 1000);
-            bookID = bookIDPrefix + bookIDSufix;
-            const index = checkBookId(bookID);
+            const bookIdSufix = Math.floor(Math.random() * 1000);
+            bookId = bookIdPrefix + bookIdSufix;
+            const index = checkBookId(bookId);
             if (index === -1) {
                 unique = false;
             } else {
                 unique = true;
             }
         }
-        return bookID;
+        return bookId;
     }
     handleSubmit(e) {
 
         const newBook = {
-            bookID: this.getBookId(),
+            bookId: this.getBookId(),
             likes: 0,
             bookName: this.bookName,
             comments: [],
@@ -70,12 +70,12 @@ export class AddBook extends Component {
                 this.authorName = "";
                 this.description = "";
                 this.addBookForm.reset();
-                this.growl.show({ severity: 'success', summary: '', detail: 'Book Added Successfully' });
+                this.growl.show({ severity: 'success', summary: 'Success', detail: 'Added Book Successfully' });
             } else {
-                this.growl.show({ severity: 'error', summary: '', detail: 'Requires Book Name , Author and Description ' });
+                this.growl.show({ severity: 'error', summary: 'Oops!', detail: 'Please fill Book Name, Author and Description.' });
             }
         } else {
-            this.growl.show({ severity: 'error', summary: '', detail: 'Please Provide another book name.. ' });
+            this.growl.show({ severity: 'error', summary: 'Book Already Exists!', detail: 'Please provide a different book name.' });
         }
 
     }

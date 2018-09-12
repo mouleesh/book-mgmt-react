@@ -15,12 +15,3 @@ export const Header = (props) => {
         </div>: null}
     </header>
 }
-
-
-
-
-
-
-
-
-

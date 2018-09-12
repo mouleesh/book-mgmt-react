@@ -35,19 +35,19 @@ export class Login extends Component {
 
     formSubmit(e) {
         if (e.keyCode === 13 || e.type === "click" ) {
-            const passWord = this.password.current.value;
-            if (this.state.username && passWord.length > 0) {
+            const password = this.password.current.value;
+            if (this.state.username && password.length > 0) {
                 let userData = this.state.loginDetails.find((loginDetail => {
                     return loginDetail.username === this.state.username;
                 }));
-                const isLoggedIn = (userData.password === passWord);
+                const isLoggedIn = (userData.password === password);
                 const loginInfo = {
                     username: this.state.username,
                     isLoggedIn: isLoggedIn
                 };
                 this.props.onLogin(loginInfo);
             } else {
-                this.growl.show({ severity: 'error', summary: '', detail: 'Invalid Username/Password' });
+                this.growl.show({ severity: 'error', summary: 'Invalid Crendentials!', detail: 'Please check the entered credentials.' });
             }
         }
     }
@@ -65,8 +65,8 @@ export class Login extends Component {
                 <Growl ref={el => { this.growl = el }} />
                 <div className="login">
                     <Card
-                        title="Welcome to E-LiB"
-                        subTitle="login to proceed"
+                        title="Welcome to Library Management System"
+                        subTitle="Login to Proceed"
                         className="card"
                     >
                         <div className="form">
@@ -94,7 +94,7 @@ export class Login extends Component {
                                     onKeyUp={this.formSubmit}
                                 />
                             </div>
-                            <button id="submit-btn" className="btn btn-primary" onClick={this.formSubmit}>Submit</button>
+                            <button id="submit-btn" className="btn btn-primary" onClick={this.formSubmit}>Login</button>
                         </div>
                     </Card>
                 </div>
