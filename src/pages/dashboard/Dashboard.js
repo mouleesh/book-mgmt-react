@@ -182,7 +182,7 @@ class Dashboard extends Component {
                                     </div>
                                 </section>
                                 <section id="analytics" className="dashboard-card">
-                                    <h4 className="heading" style={{ height: "15%", margin: "0 0 5px 0" }}>Analytics</h4>
+                                    <h4 className="heading" style={{ height: "15%", margin: "0 0 5px 0", minHeight: "45px"  }}>Analytics</h4>
                                     <Analytics className="analytics-chart" books={this.state.books} />
                                 </section>
                             </div>
