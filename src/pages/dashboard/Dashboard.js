@@ -19,23 +19,22 @@ class Dashboard extends Component {
             queryText: '',
             showBookDetails: false,
             bookDetailObj: '',
-            userName: ''
+            username: ''
         }
         this.search = this.search.bind(this);
         this.addBook = this.addBook.bind(this);
     }
 
-    static getDerivedStateFromProps({ favBookIds, userName }, perviousState) {
+    static getDerivedStateFromProps({ favBookIds, username }, perviousState) {
         return {
             favBookIds: favBookIds,
-            userName: userName
+            username: username
         }
     }
 
     componentDidMount() {
-        let favouriteBooks;
-        favouriteBooks = bookDetails.filter((book) => {
-            return this.state.favBookIds.includes(book.bookID);
+        let favouriteBooks = bookDetails.filter((book) => {
+            return this.state.favBookIds.includes(book.bookId);
         })
 
         this.setState({
@@ -49,9 +48,8 @@ class Dashboard extends Component {
     }
 
     showBookDetails = (bookId) => {
-
         const bookDetailObj = this.state.books.filter((book) => {
-            return book.bookID === bookId
+            return book.bookId === bookId
         });
 
         this.setState({
@@ -64,16 +62,16 @@ class Dashboard extends Component {
         const bookDetails = JSON.parse(JSON.stringify(this.state.books));
 
         const commentedBook = bookDetails.find((book) => {
-            return book.bookID === bookId;
+            return book.bookId === bookId;
         });
         commentedBook.comments.push({
             description: comment,
             commentedAt: (new Date()).toLocaleString(),
-            username: this.state.userName
+            username: this.state.username
         });
 
         const unCommentedBooks = bookDetails.filter((book) => {
-            return book.bookID !== bookId;
+            return book.bookId !== bookId;
         });
 
         this.setState({
@@ -90,9 +88,9 @@ class Dashboard extends Component {
 
     onLike = (bookId, isLiked) => {
 
-        const favBookDetail = this.state.books.find((book) => { return book.bookID === bookId });
+        const favBookDetail = this.state.books.find((book) => { return book.bookId === bookId });
         let books = this.state.books.map((data) => {
-            if (data.bookID === bookId) {
+            if (data.bookId === bookId) {
                 isLiked ? data.likes++ : data.likes--;
             }
             return data;
@@ -113,7 +111,7 @@ class Dashboard extends Component {
                 const perviousState = JSON.parse(JSON.stringify(pervState));
                 return {
                     favouriteBooks: perviousState.favouriteBooks.filter((book) => {
-                        return book.bookID !== bookId;
+                        return book.bookId !== bookId;
                     }),
                     books: books
                 }

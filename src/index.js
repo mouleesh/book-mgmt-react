@@ -10,8 +10,8 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 ReactDOM.render(<BrowserRouter>
-                    <App />
-                </BrowserRouter>, 
-                document.getElementById('root'));
-                
+    <App />
+</BrowserRouter>,
+    document.getElementById('root'));
+
 registerServiceWorker();

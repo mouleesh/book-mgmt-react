@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { FaComment, FaUserCircle } from 'react-icons/fa';
+import { FaComment } from 'react-icons/fa';
 import {Growl} from 'primereact/growl';
+import CommentsList from './CommentsList';
 
 class Comment extends Component {
     constructor(props) {
@@ -10,11 +11,11 @@ class Comment extends Component {
 
     onComment = () => {
         if (this.commentTextRef.current.value === '') {
-            this.growl.show({ severity: 'error', summary: 'Comment Required', detail: 'Please enter the Comment in the Textarea!' });
+            this.growl.show({ severity: 'error', summary: 'Comment Required', detail: 'Please enter the comment!' });
             return;
         }
 
-        this.props.addBookComment(this.props.bookID, this.commentTextRef.current.value)
+        this.props.addBookComment(this.props.bookId, this.commentTextRef.current.value)
         this.commentTextRef.current.value = '';
     }
 
@@ -53,21 +54,3 @@ class Comment extends Component {
 }
 
 export default Comment;
-
-
-export const CommentsList = ({description, username, commentedAt}) => {
-    return (<div >
-        <li className="list-group-item">
-            <div style={{ display: "inline-flex" }}>
-                <FaUserCircle  size={40}/>
-                <h4 style={{ padding: "10px 0px 0px 5px" }}>{username}</h4>
-            </div>
-
-            <div style={{ overflow: "hidden" }}>
-                <p>{description}</p>
-                <small className="float-right">Commented At: {commentedAt}</small>
-            </div>
-        </li>
-        <br/>
-    </div>);
-}

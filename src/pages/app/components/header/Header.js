@@ -23,12 +23,3 @@ export const Header = (props) => {
             </React.Fragment> : null}
     </header>
 }
-
-
-
-
-
-
-
-
-
