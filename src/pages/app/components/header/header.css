@@ -4,34 +4,34 @@
     height: 60px;
     float: left;
     max-width: 300px;
-  }
+}
   
-  .App-header {
+.App-header {
     height: 75px;
     padding: 10px;
     background-color: dimgray;
     color: azure;
     min-width: inherit;
-  }
-
-  .user-info{
-      width: 55px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: cadetblue;
-  }
-
-
-  .dropbtn {
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
 }
+
+.user-info{
+      width: 55px;
+      height: 40px;
+      margin: 8px 0;
+      background-color: dimgray;
+}
+
+.signoutbtn{
+    width: 55px;
+    height: 30px;
+    color: aliceblue;
+    background-color: dimgray;
+}
+
 
 .dropdown {
     position: relative;
-    display: block;
+    display: none;
     float: right;
 }
 
@@ -40,7 +40,7 @@
     display: none;
     position: absolute;
     right: 1%;
-    background-color: cadetblue;
+    background-color: dimgray;
     border-radius: 5px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -53,6 +53,17 @@
     display: block;
 }
 
+.dropdown-content b {
+    display: block;
+}
+
+.logged-user-detail{
+    display: block;  
+    position: relative;
+    float: right;
+    margin: 12px 0;
+}
+
 .dropdown-content p {
   padding: 10px 16px;
   display: block;
@@ -63,3 +74,12 @@
 
 .dropdown:hover .dropdown-content {display: block;}
 
+@media screen and (max-width: 550px){
+    .dropdown{
+        display: block;
+    }
+
+    .logged-user-detail{
+        display: none;
+    }
+}
