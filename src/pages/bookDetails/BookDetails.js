@@ -32,7 +32,7 @@ export class BookDetails extends Component {
         return (
             <div>
                 <button id="backToDash" className="btn btn-primary btn-sm" onClick={this.props.backToDashboard}> <FaArrowLeft /> Back </button>
-                <div className="container" style={{padding: "10px 0 0 0"}} >
+                <div className="container" style={{padding: "10px"}} >
                     <div className="row">
                         <div className="col-md-4">
                             <img id="bookImage" src="https://loremflickr.com/320/240/book" alt="Book Cover" />
