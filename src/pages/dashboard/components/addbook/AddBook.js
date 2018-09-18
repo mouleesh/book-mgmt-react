@@ -22,11 +22,11 @@ export class AddBook extends Component {
 
     bookNameCheck(bookName = "") {
         this.bookName = bookName;
-        const index = this.state.bookDetails.findIndex((book) => {
+        const bookList = this.state.bookDetails.filter((book) => {
             return book.bookName.toLowerCase() === bookName.toLowerCase();
         });
 
-        (index === -1 && bookName.length > 0) ? this.setState({ hasBook: false, isValid: true, error: "" }) : this.setState({ hasBook: true, isValid: false, error: "Book already exists!!!" });
+        (bookList.length === 0 && bookName.length > 0) ? this.setState({ hasBook: false, isValid: true, error: "" }) : this.setState({ hasBook: true, isValid: false, error: "Book already exists!!!" });
     }
 
 
@@ -35,20 +35,21 @@ export class AddBook extends Component {
         let bookId;
         let unique = false;
         let i;
+        let bookIdSufix = 100;
         let checkBookId = (bookid) => {
-            return this.state.bookDetails.findIndex((book) => {
+            return this.state.bookDetails.filter((book) => {
                 return book.bookId === bookid;
             });
         };
-        for (i = 0; i < 10 || unique; i++) {
-            const bookIdSufix = Math.floor(Math.random() * 1000);
+        for (i = 0; i < 20 && unique; i++) {
             bookId = bookIdPrefix + bookIdSufix;
-            const index = checkBookId(bookId);
-            if (index === -1) {
+            const bookList = checkBookId(bookId);
+            if (bookList.length > 0) {
                 unique = false;
             } else {
                 unique = true;
             }
+            bookIdSufix++;
         }
         return bookId;
     }

@@ -31,9 +31,9 @@ class App extends Component {
   }
 
   setUser(userDetail) {
-    const userInfo = userDetails.find((userInfo) => {
+    const userInfo = userDetails.filter((userInfo) => {
       return userInfo.username === userDetail.username;
-    });
+    })[0];
     this.setState({
       isLoggedIn: userDetail.isLoggedIn,
       username: userDetail.username,

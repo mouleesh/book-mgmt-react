@@ -34,7 +34,7 @@ class Dashboard extends Component {
 
     componentDidMount() {
         let favouriteBooks = bookDetails.filter((book) => {
-            return this.state.favBookIds.includes(book.bookId);
+            return this.state.favBookIds.indexOf(book.bookId) !== -1;
         })
 
         this.setState({
@@ -61,9 +61,9 @@ class Dashboard extends Component {
     addBookComment = (bookId, comment) => {
         const bookDetails = JSON.parse(JSON.stringify(this.state.books));
 
-        const commentedBook = bookDetails.find((book) => {
+        const commentedBook = bookDetails.filter((book) => {
             return book.bookId === bookId;
-        });
+        })[0];
         commentedBook.comments.push({
             description: comment,
             commentedAt: (new Date()).toLocaleString(),
@@ -88,7 +88,7 @@ class Dashboard extends Component {
 
     onLike = (bookId, isLiked) => {
 
-        const favBookDetail = this.state.books.find((book) => { return book.bookId === bookId });
+        const favBookDetail = this.state.books.filter((book) => { return book.bookId === bookId })[0];
         let books = this.state.books.map((data) => {
             if (data.bookId === bookId) {
                 isLiked ? data.likes++ : data.likes--;

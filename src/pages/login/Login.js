@@ -24,11 +24,11 @@ export class Login extends Component {
 
 
     userNameCheck(username = "") {
-        const index = this.state.loginDetails.findIndex(loginDetail => {
+        const userLoginDetails = this.state.loginDetails.filter(loginDetail => {
             return loginDetail.username === username;
         });
 
-        (index > -1) ? this.setState({ username: username }) :
+        (userLoginDetails.length > 0) ? this.setState({ username: username }) :
             this.setState({ username: null });
 
     }
@@ -37,9 +37,9 @@ export class Login extends Component {
         if (e.keyCode === 13 || e.type === "click" ) {
             const password = this.password.current.value;
             if (this.state.username && password.length > 0) {
-                let userData = this.state.loginDetails.find((loginDetail => {
+                let userData = this.state.loginDetails.filter((loginDetail => {
                     return loginDetail.username === this.state.username;
-                }));
+                }))[0];
                 const isLoggedIn = (userData.password === password);
                 const loginInfo = {
                     username: this.state.username,
