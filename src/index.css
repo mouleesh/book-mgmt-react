@@ -6,9 +6,18 @@ body {
 }
 
 .btn {
-  text-transform: lowercase;
+  text-transform: capitalize;
   font-size: medium;
   font-weight: bolder;
+  background-color: #60b6c7;
+  border-color: #60b6c7;
+  color: white;
+}
+.btn:focus, .btn:hover {
+  text-decoration: none;
+  background-color: #60b6c7;
+  border-color: #60b6c7;
+  color: white
 }
 
 
