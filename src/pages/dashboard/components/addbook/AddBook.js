@@ -97,6 +97,8 @@ export class AddBook extends Component {
                                     onChange={e => this.bookNameCheck(e.target.value)} />
                             </div>
                         </div>
+                    </div>
+                    <div className="form-row">
                         <div className="col">
                             <div className="form-group">
                                 <label htmlFor="authorName">Author</label>
