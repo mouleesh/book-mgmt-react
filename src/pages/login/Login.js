@@ -34,17 +34,11 @@ export class Login extends Component {
     }
 
     formSubmit(e) {
-        if (e.keyCode === 13 || e.type === "click" ) {
-            const passWord = this.password.current.value;
-            if (this.state.username && passWord.length > 0) {
-                let userData = this.state.loginDetails.find((loginDetail => {
-                    return loginDetail.username === this.state.username;
-                }));
-                const isLoggedIn = (userData.password === passWord);
-                const loginInfo = {
-                    username: this.state.username,
-                    isLoggedIn: isLoggedIn
-                };
+        if (e.keyCode === 13 || e.type === "click") {
+            let passWord = this.password.current.value;
+            let userName = this.state.username;
+            let loginInfo = this.getLoginInfo(userName, passWord)
+            if (loginInfo) {
                 this.props.onLogin(loginInfo);
             } else {
                 this.growl.show({ severity: 'error', summary: '', detail: 'Invalid Username/Password' });
@@ -52,6 +46,19 @@ export class Login extends Component {
         }
     }
 
+    getLoginInfo = (username, password) => {
+        if (username && password.length > 0) {
+            let userData = this.state.loginDetails.find((loginDetail => {
+                return loginDetail.username === username;
+            }));
+            const isLoggedIn = (userData.password === password);
+            const loginInfo = {
+                username: username,
+                isLoggedIn: isLoggedIn
+            };
+            return loginInfo;
+        }
+    }
 
     render() {
 
