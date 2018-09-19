@@ -117,5 +117,4 @@ export class Login extends Component {
             </Fragment>
         )
     }
-
 }
