@@ -18,7 +18,7 @@ div.container{
 }
 
 .listBooks{
-  height: 80%;
+  height: 77%;
   overflow: auto;
   padding-top: 2%;
 }
@@ -42,10 +42,14 @@ div.container{
   overflow: auto;
 }
 
+#bookListDiv{
+  min-height: 400px;
+}
+
 @media screen and (max-width: 960px){
   .das-col-fav{
-      flex: 0 0 33.333333%;
-      max-width: 33.333333%;
+      flex: 0 0 45%;
+      max-width: 45%;
   }
 
   canvas.chartjs-render-monitor{
@@ -54,8 +58,8 @@ div.container{
   }
 
   .das-col-alt{
-    flex: 0 0 66.666667%;
-    max-width: 66.666667%;
+    flex: 0 0 55%;
+    max-width: 55%;
   }
 }
 
@@ -66,11 +70,21 @@ div.container{
   }
 
   #bookListDiv{
-    height: calc((100vh - 125px)/2);
+    height: 400px;
+  }
+
+  .listBooks{
+    height: 68%;
   }
   
 }
 
+@media screen and (max-width: 300px){
+  .addBtn{
+    right: 0;
+    left: 5px;
+  }
+}
 ::-webkit-scrollbar-track
 {
 	display: none;
@@ -131,10 +145,10 @@ canvas.chartjs-render-monitor{
 }
 
 .addBtn{
-  position: fixed;
+  position: absolute;
   bottom: 8%;
   right: 3%;
-  color: #007bff;
+  color: #60b6c7;
   width: 55px;
   height: 50px;
   z-index: 2;
@@ -145,7 +159,7 @@ canvas.chartjs-render-monitor{
 }
 
 .modal-content{
-  border-radius: 10px 10px 20px 74px !important; 
+  border-radius: 10px; 
 }
 
 #backToDash{
@@ -157,4 +171,6 @@ canvas.chartjs-render-monitor{
 #bookImage{
   width: 100%;
   height: 100%;
+  max-height: 300px;
+  max-width: 300px;
 }

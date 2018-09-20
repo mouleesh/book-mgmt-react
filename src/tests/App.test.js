@@ -7,9 +7,8 @@ import App from '../pages/app/App';
 import { Footer } from '../pages/app/components/footer/Footer';
 import { Header } from '../pages/app/components/header/Header';
 import { AddBook } from '../pages/dashboard/components/addbook/AddBook';
-const book = new AddBook;
 
-const crctMath = Object.create(global.Math);
+const book = new AddBook;
 
 it('App renders without crashing', () => {
     const div = document.createElement('div');
@@ -37,17 +36,23 @@ test('bookid is null', () => {
 })
 
 describe('Prefix for Book ID is missing', () => {
-
-    const mockMath = Object.create(global.Math);
-    mockMath.random = () => 0.5;
-    global.Math = mockMath;
-
-    let bookid = book.getBookId();
+    let bookDetails = [{ bookId: 'BK001' }];
+    const book = shallow(<AddBook bookDetails={bookDetails} addBook="" />)
+    let bookid = book.instance().getBookId();
     it('Checks whether the book id prefixed by BK and matches', () => {
-        expect([bookid, bookid]).toEqual([expect.stringContaining('BK'), expect.stringMatching(/BK500/)])
-        expect(bookid).toBe('BK500')
+        expect([bookid, bookid]).toEqual([expect.stringContaining('BK'), expect.stringMatching(/BK100/)])
+        expect(bookid).toBe('BK100')
     });
+});
 
-    global.Math = crctMath;
+describe('Checking that already presenting BookId is not returned by getBookId() function', () => {
+    let bookDetails = [{ bookId: 'BK100' }];
+    console.log(bookDetails);
+    const book = shallow(<AddBook bookDetails={bookDetails} addBook="" />)
+    let bookid = book.instance().getBookId();
+    it('Checks whether the book id prefixed by BK and matches', () => {
+        expect([bookid, bookid]).toEqual([expect.stringContaining('BK'), expect.stringMatching(/BK101/)])
+        expect(bookid).toBe('BK101')
+    });
 });
 

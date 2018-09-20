@@ -23,17 +23,17 @@ class App extends Component {
 
   onLogin(userDetail = {}) {
     if (!userDetail.isLoggedIn) {
-      this.growl.show({ severity: 'warn', summary: 'password error', detail: 'Invalid Username/Password' })
+      this.growl.show({ severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' })
     } else {
       this.setUser(userDetail);
-      this.growl.show({ severity: 'success', summary: 'login success', detail: 'LogIn Successful' });
+      this.growl.show({ severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' });
     }
   }
 
   setUser(userDetail) {
-    const userInfo = userDetails.find((userInfo) => {
+    const userInfo = userDetails.filter((userInfo) => {
       return userInfo.username === userDetail.username;
-    });
+    })[0];
     this.setState({
       isLoggedIn: userDetail.isLoggedIn,
       username: userDetail.username,
@@ -46,7 +46,7 @@ class App extends Component {
       isLoggedIn: false,
       username: ""
     });
-    this.growl.show({ severity: 'info', summary: 'Info', detail: 'Logged out' });
+    this.growl.show({ severity: 'info', summary: 'Logged Out', detail: 'Thankyou for visiting LMS!' });
   }
 
   render() {
@@ -64,7 +64,7 @@ class App extends Component {
             {(this.state.isLoggedIn) ?
               <Switch>
                 <Route path="/dashboard" render={() => {
-                  return <Dashboard userName={this.state.userDetail.username} favBookIds={this.state.userDetail.likedBooks} />
+                  return <Dashboard username={this.state.userDetail.username} favBookIds={this.state.userDetail.likedBooks} />
                 }} />
                 <Redirect to="/dashboard" />
               </Switch> :

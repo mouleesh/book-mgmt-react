@@ -16,13 +16,21 @@
 }
 
 .form {
-    text-align: initial;
+    text-align: left;
     padding: 2%;
 }
 
 
-.check{
+.check-hidden{
     background-color: azure;
     width: 5%;
+    visibility: hidden;
 }
+
+.check-visible{
+    background-color: azure;
+    width: 5%;
+    visibility: visible;
+}
+
 

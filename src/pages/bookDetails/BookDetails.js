@@ -20,19 +20,19 @@ export class BookDetails extends Component {
         this.setState({
             isLike: !this.state.isLike
         }, () => {
-            this.props.onLike(this.props.bookDetails.bookID, this.state.isLike);
+            this.props.onLike(this.props.bookDetails.bookId, this.state.isLike);
         });
     }
 
     render() {
-        let { bookName, bookID, comments, likes, author, description } = this.props.bookDetails;
+        let { bookName, bookId, comments, likes, author, description } = this.props.bookDetails;
 
         const LikeButtonText = () => { return this.state.isLike ? <FaThumbsDown /> : <FaThumbsUp /> };
 
         return (
             <div>
                 <button id="backToDash" className="btn btn-primary btn-sm" onClick={this.props.backToDashboard}> <FaArrowLeft /> Back </button>
-                <div className="container" style={{padding: "10px 0 0 0"}} >
+                <div className="container" style={{padding: "10px"}} >
                     <div className="row">
                         <div className="col-md-4">
                             <img id="bookImage" src="https://loremflickr.com/320/240/book" alt="Book Cover" />
@@ -62,7 +62,7 @@ export class BookDetails extends Component {
                     <br />
                     <div className="row">
                         <div className="col-md-12">
-                            <Comment comments={comments} bookID={bookID} addBookComment={this.props.addBookComment} />
+                            <Comment comments={comments} bookId={bookId} addBookComment={this.props.addBookComment} />
                         </div>
                     </div>
                 </div>

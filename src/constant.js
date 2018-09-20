@@ -53,7 +53,7 @@ export const loginDetails = [{
 
   export const bookDetails = [ 
     {
-        bookID: 'BK001',
+        bookId: 'BK001',
         likes: 5,
         bookName: 'The Lightning Thief',
         comments: [
@@ -72,7 +72,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK002',
+        bookId: 'BK002',
         likes: 3,
         bookName: 'The Sea of Monsters',
         comments: [
@@ -91,7 +91,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK003',
+        bookId: 'BK003',
         likes: 6,
         bookName: "Sophie's World : The Greek Philosophers",
         comments: [
@@ -110,7 +110,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK004',
+        bookId: 'BK004',
         likes: 5,
         bookName: 'Lucene in Action, Second Edition',
         comments: [
@@ -129,7 +129,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK005',
+        bookId: 'BK005',
         likes: 2,
         bookName: 'Book 5',
         comments: [
@@ -148,7 +148,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK006',
+        bookId: 'BK006',
         likes: 7,
         bookName: 'Book 6',
         comments: [
@@ -168,7 +168,7 @@ export const loginDetails = [{
         
       },
       {
-        bookID: 'BK007',
+        bookId: 'BK007',
         likes: 3,
         bookName: 'Book 7',
         comments: [
@@ -187,7 +187,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK008',
+        bookId: 'BK008',
         likes: 4,
         bookName: 'Book 8',
         comments: [
@@ -206,7 +206,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK009',
+        bookId: 'BK009',
         likes: 9,
         bookName: 'Book 9',
         comments: [
@@ -225,7 +225,7 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       },
       {
-        bookID: 'BK010',
+        bookId: 'BK010',
         likes: 4,
         bookName: 'Book 10',
         comments: [
@@ -244,3 +244,8 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       }
   ]
+
+  export const growlData = {
+    loginSuccess: { severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' },
+    loginError: { severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' }
+  }

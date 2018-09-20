@@ -22,40 +22,43 @@ export class AddBook extends Component {
 
     bookNameCheck(bookName = "") {
         this.bookName = bookName;
-        const index = this.state.bookDetails.findIndex((book) => {
+        const bookList = this.state.bookDetails.filter((book) => {
             return book.bookName.toLowerCase() === bookName.toLowerCase();
         });
 
-        (index === -1 && bookName.length > 0) ? this.setState({ hasBook: false, isValid: true, error: "" }) : this.setState({ hasBook: true, isValid: false, error: "Book already exists!!!" });
+        (bookList.length === 0 && bookName.length > 0) ? this.setState({ hasBook: false, isValid: true, error: "" }) : this.setState({ hasBook: true, isValid: false, error: "Book already exists!!!" });
     }
 
+    checkBookId = (bookid) => {
+        return this.state.bookDetails.filter((book) => {
+            return book.bookId === bookid;
+        }).length > 0;
+    };
 
     getBookId() {
-        const bookIDPrefix = "BK";
-        let bookID;
-        let unique = false;
-        let i;
-        let checkBookId = (bookid) => {
-            return this.state.bookDetails.findIndex((book) => {
-                return book.bookID === bookid;
-            });
-        };
-        for (i = 0; i < 10 || unique; i++) {
-            const bookIDSufix = Math.floor(Math.random() * 1000);
-            bookID = bookIDPrefix + bookIDSufix;
-            const index = checkBookId(bookID);
-            if (index === -1) {
-                unique = false;
+        const bookIdPrefix = "BK";
+        let bookId;
+        let isBookIDExist = true;
+        let bookIdSufix = 100;
+        
+        for (let i = 0; i < 20 && isBookIDExist; i++) {
+            bookId = bookIdPrefix + bookIdSufix;
+            const bookExists = this.checkBookId(bookId);
+            
+            if (bookExists) {
+                isBookIDExist = true;
             } else {
-                unique = true;
+                isBookIDExist = false;
             }
+            bookIdSufix++;
         }
-        return bookID;
+        return bookId;
     }
+
     handleSubmit(e) {
 
         const newBook = {
-            bookID: this.getBookId(),
+            bookId: this.getBookId(),
             likes: 0,
             bookName: this.bookName,
             comments: [],
@@ -70,12 +73,12 @@ export class AddBook extends Component {
                 this.authorName = "";
                 this.description = "";
                 this.addBookForm.reset();
-                this.growl.show({ severity: 'success', summary: '', detail: 'Book Added Successfully' });
+                this.growl.show({ severity: 'success', summary: 'Success', detail: 'Added Book Successfully' });
             } else {
-                this.growl.show({ severity: 'error', summary: '', detail: 'Requires Book Name , Author and Description ' });
+                this.growl.show({ severity: 'error', summary: 'Oops!', detail: 'Please fill Book Name, Author and Description.' });
             }
         } else {
-            this.growl.show({ severity: 'error', summary: '', detail: 'Please Provide another book name.. ' });
+            this.growl.show({ severity: 'error', summary: 'Book Already Exists!', detail: 'Please provide a different book name.' });
         }
 
     }
@@ -96,6 +99,8 @@ export class AddBook extends Component {
                                     onChange={e => this.bookNameCheck(e.target.value)} />
                             </div>
                         </div>
+                    </div>
+                    <div className="form-row">
                         <div className="col">
                             <div className="form-group">
                                 <label htmlFor="authorName">Author</label>

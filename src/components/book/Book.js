@@ -16,7 +16,7 @@ class Book extends Component {
     }
 
     onShowBookDetails = () => {
-        this.props.showBookDetails(this.state.book.bookID);
+        this.props.showBookDetails(this.state.book.bookId);
     }
 
     render() {

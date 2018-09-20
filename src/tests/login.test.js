@@ -5,6 +5,11 @@ import { configure, mount } from 'enzyme';
 
 const onLogin = () => { console.log('This function mocks the onLogin') };
 
+const loginDetalsMock = [{
+    username: 'tino',
+    password: '12345'
+  }];
+
 beforeEach(()=>{
     configure({ adapter: new Adapter() });
 });
@@ -46,7 +51,7 @@ describe('login Details not set properly in componentDidMount()' , () => {
 describe('getLoginInfo() Authentication is not happening properly' , () => {
     it('checks whether the user is able to login or not', ()=>{
         const wrapper = mount(<Login onLogin =  {onLogin} />)
-        const loginInfo = wrapper.instance().getLoginInfo('tino','12345');
+        const loginInfo = wrapper.instance().getLoginInfo('tino', '12345', loginDetalsMock);
         expect(loginInfo.isLoggedIn).toBeTruthy();
         expect(loginInfo).not.toBeNull();
     } )
@@ -55,7 +60,7 @@ describe('getLoginInfo() Authentication is not happening properly' , () => {
 describe('getLoginInfo() Authentication is done for wrong credentials' , () => {
     it('checks whether the user is able to login if he has wrong credentials', ()=>{
         const wrapper = mount(<Login onLogin =  {onLogin} />)
-        const loginInfo = wrapper.instance().getLoginInfo('tino','123');
+        const loginInfo = wrapper.instance().getLoginInfo('tino', '123', loginDetalsMock);
         console.log(loginInfo);
         expect(loginInfo.isLoggedIn).not.toBeTruthy();
     } )
