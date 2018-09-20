@@ -7,8 +7,7 @@ import App from '../pages/app/App';
 import { Footer } from '../pages/app/components/footer/Footer';
 import { Header } from '../pages/app/components/header/Header';
 import { AddBook } from '../pages/dashboard/components/addbook/AddBook';
-import { Foo } from '../pages/login/Foo';
-const ob = new AddBook;
+const book = new AddBook;
 
 const crctMath = Object.create(global.Math);
 
@@ -33,7 +32,7 @@ describe("Header Test", () => {
 });
 
 test('bookid is null', () => {
-    let bookid = ob.getBookId();
+    let bookid = book.getBookId();
     expect(bookid).not.toBeNull();
 })
 
@@ -43,7 +42,7 @@ describe('Prefix for Book ID is missing', () => {
     mockMath.random = () => 0.5;
     global.Math = mockMath;
 
-    let bookid = ob.getBookId();
+    let bookid = book.getBookId();
     it('Checks whether the book id prefixed by BK and matches', () => {
         expect([bookid, bookid]).toEqual([expect.stringContaining('BK'), expect.stringMatching(/BK500/)])
         expect(bookid).toBe('BK500')
