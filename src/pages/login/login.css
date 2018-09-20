@@ -21,8 +21,16 @@
 }
 
 
-.check{
+.check-hidden{
     background-color: azure;
     width: 5%;
+    visibility: hidden;
 }
+
+.check-visible{
+    background-color: azure;
+    width: 5%;
+    visibility: visible;
+}
+
 

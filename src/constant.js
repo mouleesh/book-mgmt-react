@@ -244,3 +244,8 @@ export const loginDetails = [{
         description : "​Readers’ advisors around the world know: horror is having a moment. Well, more than a moment; it is red hot. But why? It might have something to do with our uncertain times.",
       }
   ]
+
+  export const growlData = {
+    loginSuccess: { severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' },
+    loginError: { severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' }
+  }

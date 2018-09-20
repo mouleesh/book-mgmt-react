@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import './login.css';
 import { Card } from 'primereact/card';
-import { loginDetails } from "../../constant";
+import { loginDetails, growlData } from "../../constant";
 import { FaCheck } from 'react-icons/fa';
 import { Growl } from 'primereact/growl';
 
@@ -10,13 +10,11 @@ export class Login extends Component {
         super(props);
         this.state = {
             loginDetails: [],
-            username: null
+            username: null,
+            isValueEntered: false
         };
-
-        // refactor below 2 binds with arrow functions for context binding
-        this.userNameCheck = this.userNameCheck.bind(this);
-        this.formSubmit = this.formSubmit.bind(this);
         this.password = React.createRef();
+        this.username = React.createRef();
     }
 
     componentDidMount() {
@@ -24,54 +22,61 @@ export class Login extends Component {
     }
 
 
-    //refactor here with arrow function
-    userNameCheck(username = "") {
+    userNameCheck = () => {
+        const username = this.username.current.value;
         const userLoginDetails = this.state.loginDetails.filter(loginDetail => {
             return loginDetail.username === username;
         });
 
         (userLoginDetails.length > 0) ? this.setState({ username: username }) :
             this.setState({ username: null });
+        this.setIsValueEntered();
 
     }
 
-    //refactor here with arrow function
-    //general rule of thumb: all variable declarations to be at the top of any block(s). Although JS does it self with JS Hoisting, developers needs to follow that practice
-
-    formSubmit(e) {
-
-        //on the UI, disable the Login button until voth checkboxes are filled with details (either correct or incorrect)
-
-        if (e.keyCode === 13 || e.type === "click" ) {  //refactor here with object destructuring here and below, whereever possible
-            const password = this.password.current.value;
-            //refactor below 2 lins with destructuring
-            if (this.state.username && password.length > 0) {
-                let userData = this.state.loginDetails.filter((loginDetail => {
-                    return loginDetail.username === this.state.username;
+    formSubmit = ({ keyCode, type }) => {
+        const password = this.password.current.value;
+        this.setIsValueEntered();
+        const { username, loginDetails } = this.state;
+        if (keyCode === 13 || type === "click" ) {
+            if (username && password.length > 0) {
+                let userData = loginDetails.filter((loginDetail => {
+                    return loginDetail.username === username;
                 }))[0];
                 const isLoggedIn = (userData.password === password);
-                //use the refactored details below
                 const loginInfo = {
-                    username: this.state.username,
+                    username: username,
                     isLoggedIn: isLoggedIn
                 };
                 this.props.onLogin(loginInfo);
             } else {
-                //put the below hard-coded strings in a seperate constant file so that repetition can be avoided
-                this.growl.show({ severity: 'error', summary: 'Invalid Crendentials!', detail: 'Please check the entered credentials.' });
+                this.growl.show(growlData.loginError);
             }
         }
     }
 
+    getCheckClass() {
+        let checkClass = "check-hidden";
+        if (this.state.username) {
+            checkClass = "check-visible";
+        }
+        return checkClass;
+    }
 
+    setIsValueEntered = () =>{
+        if(this.username.current.value.length > 0 && this.password.current.value.length > 0){
+            this.setState({
+                isValueEntered: true
+            })
+        }else{
+            this.setState({
+                isValueEntered: false
+            })
+        }
+    }
     render() {
 
-        //refactor it to a new function. Currently, it is against the SRP principle and is polluting the render method
-        let checkVisibility = "hidden";
-
-        if (this.state.username) {
-            checkVisibility = "inherit";    //don't use inherit. it is by default. once you use 'hidden', you should always display it with 'visible' property
-        }
+        let checkClass = this.getCheckClass();
         return (
             <Fragment>
                 <Growl ref={el => { this.growl = el }} />
@@ -84,15 +89,14 @@ export class Login extends Component {
                         <div className="form">
                             <div className="form-group">
                                 <label htmlFor="username">Username</label>
-                                <FaCheck className="check"
-                                    style={{ visibility: checkVisibility }} //extract it to a seperate class. styles will cause specificity issue in the future. check more for what is Specificity in CSS
-                                />
+                                <FaCheck className={checkClass} />
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="username"
                                     placeholder="Username"
-                                    onChange={(input) => { this.userNameCheck(input.target.value) }}    //rather use onBlur. We can avoid multiple calls by that
+                                    ref={this.username}
+                                    onBlur={(input) => { this.userNameCheck() }}
                                 />
                             </div>
                             <div className="form-group">
@@ -106,7 +110,7 @@ export class Login extends Component {
                                     onKeyUp={this.formSubmit}
                                 />
                             </div>
-                            <button id="submit-btn" className="btn btn-primary" onClick={this.formSubmit}>Login</button>
+                            <button id="submit-btn" disabled={!this.state.isValueEntered} className="btn btn-primary" onClick={this.formSubmit}>Login</button>
                         </div>
                     </Card>
                 </div>
