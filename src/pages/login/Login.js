@@ -22,8 +22,10 @@ export class Login extends Component {
     }
 
 
-    userNameCheck = () => {
-        const username = this.username.current.value;
+    /**
+     * Checks user name is exist in or not
+     */
+    userNameCheck = (username) => {
         const userLoginDetails = this.state.loginDetails.filter(loginDetail => {
             return loginDetail.username === username;
         });
@@ -31,7 +33,6 @@ export class Login extends Component {
         (userLoginDetails.length > 0) ? this.setState({ username: username }) :
             this.setState({ username: null });
         this.setIsValueEntered();
-
     }
 
     formSubmit = ({ keyCode, type }) => {
@@ -39,19 +40,28 @@ export class Login extends Component {
         this.setIsValueEntered();
         const { username, loginDetails } = this.state;
         if (keyCode === 13 || type === "click" ) {
-            if (username && password.length > 0) {
-                let userData = loginDetails.filter((loginDetail => {
-                    return loginDetail.username === username;
-                }))[0];
-                const isLoggedIn = (userData.password === password);
-                const loginInfo = {
-                    username: username,
-                    isLoggedIn: isLoggedIn
-                };
+            const loginInfo = this.getLoginInfo(username, password, loginDetails);
+            if (loginInfo) {
+                
                 this.props.onLogin(loginInfo);
             } else {
                 this.growl.show(growlData.loginError);
             }
+        }
+    }
+
+
+    getLoginInfo = (username, password, loginDetails) => {
+        if (username && password.length > 0) {
+            let userData = loginDetails.find((loginDetail => {
+                return loginDetail.username === username;
+            }));
+            const isLoggedIn = (userData.password === password);
+            const loginInfo = {
+                username: username,
+                isLoggedIn: isLoggedIn
+            };
+            return loginInfo;
         }
     }
 
@@ -96,7 +106,7 @@ export class Login extends Component {
                                     id="username"
                                     placeholder="Username"
                                     ref={this.username}
-                                    onBlur={(input) => { this.userNameCheck() }}
+                                    onBlur={(input) => { this.userNameCheck(this.username.current.value)}}
                                 />
                             </div>
                             <div className="form-group">

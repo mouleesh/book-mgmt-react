@@ -29,30 +29,32 @@ export class AddBook extends Component {
         (bookList.length === 0 && bookName.length > 0) ? this.setState({ hasBook: false, isValid: true, error: "" }) : this.setState({ hasBook: true, isValid: false, error: "Book already exists!!!" });
     }
 
+    checkBookId = (bookid) => {
+        return this.state.bookDetails.filter((book) => {
+            return book.bookId === bookid;
+        }).length > 0;
+    };
 
     getBookId() {
         const bookIdPrefix = "BK";
         let bookId;
-        let unique = false;
-        let i;
+        let isBookIDExist = true;
         let bookIdSufix = 100;
-        let checkBookId = (bookid) => {
-            return this.state.bookDetails.filter((book) => {
-                return book.bookId === bookid;
-            });
-        };
-        for (i = 0; i < 20 && unique; i++) {
+        
+        for (let i = 0; i < 20 && isBookIDExist; i++) {
             bookId = bookIdPrefix + bookIdSufix;
-            const bookList = checkBookId(bookId);
-            if (bookList.length > 0) {
-                unique = false;
+            const bookExists = this.checkBookId(bookId);
+            
+            if (bookExists) {
+                isBookIDExist = true;
             } else {
-                unique = true;
+                isBookIDExist = false;
             }
             bookIdSufix++;
         }
         return bookId;
     }
+
     handleSubmit(e) {
 
         const newBook = {
