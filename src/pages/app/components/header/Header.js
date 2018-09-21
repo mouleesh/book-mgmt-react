@@ -1,11 +1,13 @@
 import React from 'react';
-import logo from './logo.png';
+import brandLogo from './brand-logo.jpg';
 import './header.css';
 import { FaSignOutAlt, FaBars } from 'react-icons/fa';
 
 export const Header = (props) => {
-    return <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    return <header className="App-header navbar navbar-expand-lg bg-light">
+        <img src={brandLogo} className="App-logo" alt="brand logo" />
+        <h2 className="m-2 text-primary">Library Management System</h2>
+        
         {(props.isLoggedIn) ?
             <React.Fragment>
                 <div className="logged-user-detail">

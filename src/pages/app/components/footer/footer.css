@@ -1,17 +1,13 @@
-.App-footer{
-    position: relative;
-    width: 100%;
-    min-width: inherit;
-    bottom: 0px;
-    height: 50px;
-    margin: 0px;
-    background-color: dimgrey;
-    color: white; 
-}
-
 .footer-text{
-    margin-top: 8px;
-    margin-right: 8px;
+    margin-top: 18px;
+    margin-right: 10px;
     float: right;
 }
 
+.footer-shadow {
+    box-shadow: 0 0 2px 0 #696969;
+}
+
+.m-t-11 {
+    margin-top: 11px;
+}
