@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
-import './login.css';
-import { loginDetails, growlData } from "../../constant";
 import { Growl } from 'primereact/growl';
+import { loginDetails, growlData } from "../../constant";
+import './login.css';
 
 export class Login extends Component {
     constructor(props) {

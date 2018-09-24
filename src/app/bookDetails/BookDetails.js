@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaThumbsUp, FaThumbsDown, FaArrowLeft } from 'react-icons/fa';
-import Comment from './components/Comment';
+import Comment from './comment/Comment';
 
 export class BookDetails extends Component {
     constructor(props) {
