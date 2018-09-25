@@ -65,7 +65,7 @@
 .logged-user-detail{
     display: block;  
     position: relative;
-    float: right;
+    left: 85%;
     margin: 12px 0;
 }
 
