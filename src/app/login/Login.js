@@ -95,7 +95,7 @@ export class Login extends Component {
             <Fragment>
                 <Growl ref={el => { this.growl = el } } />
                 <section className="login-block">
-                    <div className="container">
+                    <div className="container login-container">
                         <div className="row">
                             <div className="col-md-4 login-sec">
                                 <h2 className="text-center">Login Now</h2>

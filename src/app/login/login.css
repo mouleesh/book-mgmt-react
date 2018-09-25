@@ -9,7 +9,7 @@ padding : 50px 0;
 .btn-cursor-pointer {cursor: pointer;}
 .btn-cursor-not-allowed {cursor: not-allowed;}
 .banner-sec{background:url('home-banner.jpg')  no-repeat left bottom; background-size:cover; border-radius: 0 10px 10px 0; padding:0;}
-.container{background:#fff; border-radius: 10px; box-shadow:6px 6px 4px 0 rgb(107, 79, 39);}
+.login-container{background:#fff; border-radius: 10px; box-shadow:6px 6px 4px 0 rgb(107, 79, 39);}
 
 .login-sec{padding: 50px 30px; position:relative;}
 .login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
