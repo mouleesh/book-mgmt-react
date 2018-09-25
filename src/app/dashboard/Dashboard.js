@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Search from './components/search/Search'
-import { bookDetails } from '../../constant';
-import BookList from '../../components/bookList/BookList';
-import './Dashboard.css';
-import { BookDetails } from '../bookDetails/BookDetails';
-import Analytics from '../../components/analytics/LikeAnalytics';
-import { AddBook } from './components/addbook/AddBook';
 import { FaPlusCircle } from 'react-icons/fa';
+import { bookDetails } from '../../constant';
+import './Dashboard.css';
+import Search from './search/Search'
+import BookList from './bookList/BookList';
+import Analytics from './analytics/LikeAnalytics';
+import { AddBook } from './addbook/AddBook';
+import { BookDetails } from '../bookDetails/BookDetails';
 
 class Dashboard extends Component {
     constructor(props) {

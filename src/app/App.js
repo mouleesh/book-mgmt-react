@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import './app.css';
-import { Header } from "./components/header/Header";
-import { Footer } from "./components/footer/Footer";
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { Growl } from 'primereact/growl';
-import { Login } from '../login/Login';
-import Dashboard from "../dashboard/Dashboard";
-import { userDetails } from "../../constant";
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+
+import './app.css';
+import { Header } from "./common/header/Header";
+import { Footer } from "./common/footer/Footer";
+import { Login } from './login/Login';
+import { userDetails } from "../constant";
+import Dashboard from "./dashboard/Dashboard";
+
 
 class App extends Component {
 
