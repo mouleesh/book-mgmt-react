@@ -88,3 +88,9 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 990px){
+    .logged-user-detail{
+        left: 0%;
+    }
+}
