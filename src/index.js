@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import App from './pages/app/App';
+import App from './app/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import 'primereact/resources/themes/nova-light/theme.css';
