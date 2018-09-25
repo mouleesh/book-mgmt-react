@@ -8,7 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import 'bootswatch/dist/flatly/bootstrap.min.css';
+import 'bootswatch/dist/materia/bootstrap.min.css';
 
 ReactDOM.render(<BrowserRouter>
     <App />
