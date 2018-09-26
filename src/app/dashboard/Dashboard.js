@@ -4,6 +4,7 @@ import { bookDetails } from '../../constant';
 import './Dashboard.css';
 import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
+import { AddBook } from './addbook/AddBook';
 import { BookDetails } from '../bookDetails/BookDetails';
 import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';

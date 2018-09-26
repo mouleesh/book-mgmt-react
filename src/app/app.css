@@ -11,6 +11,6 @@
 }
 
 .App-content{
-  overflow: hidden;
+  overflow: auto;
   height: calc(100vh - 125px);
 }
