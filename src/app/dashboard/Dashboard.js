@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import { bookDetails } from '../../constant';
 import './Dashboard.css';
-import Search from './search/Search'
 import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
 import { BookDetails } from '../bookDetails/BookDetails';
 import Panel from './panel/Panel';
+import BookSearch from './bookSearch/bookSearch';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -159,17 +159,7 @@ class Dashboard extends Component {
                 <React.Fragment>
                     <div className="container-fluid">
                         <div className="row">
-                            <div id="bookListDiv" className="col dash-col das-col-fav">
-                                <aside id="bookList" className="dashboard-card">
-                                    <h2 id="booklist-heading" className="heading">Books In Store</h2>
-                                    <div id="serachDiv" className="container-fluid">
-                                        <Search onSearch={this.search} queryText={this.state.queryText} />
-                                    </div>
-                                    <div className="listBooks">
-                                        <BookList showBookDetails={this.showBookDetails} bookList={filteredBooks} />
-                                    </div>
-                                </aside>
-                            </div>
+                            <BookSearch search={this.search} queryText={this.state.queryText} showBookDetails={this.showBookDetails} filteredBooks={filteredBooks} ></BookSearch>
                             <div className="col dash-col das-col-alt">
                                 <Panel sectionID="favourites" sectionHeading="Favourite Books">
                                     <div className="list">
@@ -184,6 +174,7 @@ class Dashboard extends Component {
                             </div>
                         </div>
                     </div>
+                    <AddBook bookDetails={this.state.books} addBook={this.addBook} />            
                     <FaPlusCircle className="addBtn" data-toggle="modal" data-target="#bookModal" />
                 </React.Fragment>
             )

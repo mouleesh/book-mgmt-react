@@ -87,40 +87,55 @@ export class AddBook extends Component {
         return (
             <React.Fragment>
                 <Growl ref={el => { this.growl = el }} />
-                <form ref={el => { this.addBookForm = el }}>
-                    <div className="form-row">
-                        <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="bookName">Name</label>
-                                <input
-                                    id="bookName"
-                                    type="text"
-                                    className="form-control"
-                                    onChange={e => this.bookNameCheck(e.target.value)} />
+                <div className="modal fade" id="bookModal" tabIndex="-1" role="dialog" aria-labelledby="addBookModal" aria-hidden="true">                        
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header heading">
+                                <h5 className="modal-title" id="addBookModal">Add Book</h5>
+                            </div>
+                            <div className="modal-body">
+                                <form ref={el => { this.addBookForm = el }}>
+
+                <div className="form-row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label htmlFor="bookName">Name</label>
+                            <input
+                                id="bookName"
+                                type="text"
+                                className="form-control"
+                                onChange={e => this.bookNameCheck(e.target.value)} />
+                        </div>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label htmlFor="authorName">Author</label>
+                            <input id="authorName" type="text" className="form-control"
+                                onChange={e => { this.authorName = e.target.value }} />
+                        </div>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label htmlFor="bookDescription">Description</label>
+                            <textarea className="form-control" id="bookDescription" rows="3"
+                                onChange={e => { this.description = e.target.value }}></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button className="btn btn-primary" type="button" onClick={this.handleSubmit}>Add Book</button>
+                <button className="btn" type="reset" style={{ float: "right" }}> Clear </button>
+            </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-                    <div className="form-row">
-                        <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="authorName">Author</label>
-                                <input id="authorName" type="text" className="form-control"
-                                    onChange={e => { this.authorName = e.target.value }} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="bookDescription">Description</label>
-                                <textarea className="form-control" id="bookDescription" rows="3"
-                                    onChange={e => { this.description = e.target.value }}></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <button className="btn btn-primary" type="button" onClick={this.handleSubmit}>Add Book</button>
-                    <button className="btn" type="reset" style={{ float: "right" }}> Clear </button>
-                </form>
+                </div>
             </React.Fragment>
         )
     }
