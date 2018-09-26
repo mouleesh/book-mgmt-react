@@ -7,6 +7,8 @@ import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
 import { AddBook } from './addbook/AddBook';
 import { BookDetails } from '../bookDetails/BookDetails';
+import BookSearch from './bookSearch/bookSearch';
+import SectionWrapper from './sectionWrapper/SectionWrapper';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -159,48 +161,22 @@ class Dashboard extends Component {
                 <React.Fragment>
                     <div className="container-fluid">
                         <div className="row">
-                            <div id="bookListDiv" className="col dash-col das-col-fav">
-                                <aside id="bookList" className="dashboard-card">
-                                    <h2 id="booklist-heading" className="heading">Books In Store</h2>
-                                    <div id="serachDiv" className="container-fluid">
-                                        <Search onSearch={this.search} queryText={this.state.queryText} />
-                                    </div>
-                                    <div className="listBooks">
-                                        <BookList showBookDetails={this.showBookDetails} bookList={filteredBooks} />
-                                    </div>
-                                </aside>
-                            </div>
+                            <BookSearch search={this.search} queryText={this.state.queryText} showBookDetails={this.showBookDetails} filteredBooks={filteredBooks} ></BookSearch>
                             <div className="col dash-col das-col-alt">
-                                <section id="favourites" className="dashboard-card">
-                                    <h4 className="heading">Favourite Books</h4>
+                                <SectionWrapper sectionID="favourites" sectionHeading="Favourite Books">
                                     <div className="list">
                                         <ul id="favlist-ul">
                                             <BookList showBookDetails={this.showBookDetails} favBooks={this.state.favouriteBooks} />
                                         </ul>
                                     </div>
-                                </section>
-                                <section id="analytics" className="dashboard-card">
-                                    <h4 className="heading" style={{ height: "15%", margin: "0 0 5px 0", minHeight: "45px"  }}>Analytics</h4>
+                                </SectionWrapper>
+                                <SectionWrapper sectionID="analytics" sectionHeading="Analytics">
                                     <Analytics className="analytics-chart" books={this.state.books} />
-                                </section>
+                                </SectionWrapper>
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade" id="bookModal" tabIndex="-1" role="dialog" aria-labelledby="addBookModal" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header heading">
-                                    <h5 className="modal-title" id="addBookModal">Add Book</h5>
-                                </div>
-                                <div className="modal-body">
-                                    <AddBook bookDetails={this.state.books} addBook={this.addBook} />
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <AddBook bookDetails={this.state.books} addBook={this.addBook} />            
                     <FaPlusCircle className="addBtn" data-toggle="modal" data-target="#bookModal" />
                 </React.Fragment>
             )
