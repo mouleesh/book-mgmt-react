@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Growl } from 'primereact/growl';
-import { loginDetails, growlData } from "../../constant";
+import { growlData } from "../../constant";
 import './login.css';
+import Axios from "axios";
 
 export class Login extends Component {
     constructor(props) {
@@ -15,36 +16,28 @@ export class Login extends Component {
         this.username = React.createRef();
     }
 
-    componentDidMount() {
-        this.setState({ loginDetails: loginDetails });
+    getUserDetails = (userName) => {
+        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/loginDetail?username=' + userName);
     }
 
-    userNameCheck = () => {
-        const username = this.username.current.value;
-
-        const userLoginDetails = this.state.loginDetails.filter(loginDetail => {
-            return loginDetail.username === username;
+    userNameCheck = (username) => {
+        this.getUserDetails(username).then((response) => {
+            this.setUserDetails(response.data[0]);
+        }).catch((err) => {
+            this.growl.show(err)
         });
-
-        (userLoginDetails.length > 0) ? this.setState({ username: username }) :
-            this.setState({ username: null });
-        this.setIsValueEntered();
     }
 
     formSubmit = ({ keyCode, type }) => {
         const password = this.password.current.value;
         this.setIsValueEntered();
         const { username, loginDetails } = this.state;
+
         if (keyCode === 13 || type === "click") {
-            if (username && password.length > 0) {
-                let userData = loginDetails.filter((loginDetail => {
-                    return loginDetail.username === username;
-                }))[0];
-                const isLoggedIn = (userData.password === password);
-                const loginInfo = {
-                    username: username,
-                    isLoggedIn: isLoggedIn
-                };
+            const loginInfo = this.checkPasswordAndGetLogInInfo(username, password, loginDetails);
+            console.error("loginInfo");
+            console.error(loginInfo);
+            if(loginInfo){
                 this.props.onLogin(loginInfo);
             } else {
                 this.growl.show(growlData.loginError);
@@ -52,19 +45,29 @@ export class Login extends Component {
         }
     }
 
-
-    getLoginInfo = (username, password, loginDetails) => {
+    checkPasswordAndGetLogInInfo = (username, password, loginDetails) => {
         if (username && password.length > 0) {
-            let userData = loginDetails.find((loginDetail => {
-                return loginDetail.username === username;
-            }));
-            const isLoggedIn = (userData.password === password);
+        
+            const isLoggedIn = (loginDetails.password === password);
             const loginInfo = {
                 username: username,
                 isLoggedIn: isLoggedIn
             };
             return loginInfo;
+        } else {
+            return false;
         }
+    }
+
+    setUserDetails(userLoginDetails) {
+        (userLoginDetails) ?
+            this.setState(
+                {
+                    username: userLoginDetails.username,
+                    loginDetails: userLoginDetails
+                }) :
+        this.setIsValueEntered();
+        
     }
 
     getCheckClass() {
@@ -93,7 +96,7 @@ export class Login extends Component {
 
         return (
             <Fragment>
-                <Growl ref={el => { this.growl = el } } />
+                <Growl ref={el => { this.growl = el }} />
                 <section className="login-block">
                     <div className="container login-container">
                         <div className="row">
@@ -108,8 +111,8 @@ export class Login extends Component {
                                             id="username"
                                             placeholder=""
                                             ref={this.username}
-                                            onBlur={(input) => { this.userNameCheck() } }
-                                            />
+                                            onBlur={(input) => { this.userNameCheck(this.username.current.value) }}
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label className="badge badge-primary" htmlFor="password">Password</label>
@@ -120,7 +123,7 @@ export class Login extends Component {
                                             placeholder=""
                                             ref={this.password}
                                             onKeyUp={this.formSubmit}
-                                            />
+                                        />
                                     </div>
                                     <div className="form-check">
                                         <label className="form-check-label">
