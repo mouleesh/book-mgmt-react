@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './search.css';
 
 class Search extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Search extends Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="card" id="search-card">
                 <div className="card-header">
                     <input
                         id="SearchApts"
