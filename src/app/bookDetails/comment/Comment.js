@@ -15,7 +15,7 @@ class Comment extends Component {
             return;
         }
 
-        this.props.addBookComment(this.props.bookId, this.commentTextRef.current.value)
+        this.props.onComment(this.commentTextRef.current.value)
         this.commentTextRef.current.value = '';
     }
 

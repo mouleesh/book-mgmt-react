@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 
 class Book extends Component {
     constructor(props) {
@@ -37,7 +38,8 @@ class Book extends Component {
                         <div className="card-header"><span><b>{bookName}</b> By {author}</span></div>
                         <div className="card-body"><p>{description}</p></div>
                         <div className="card-footer">
-                            <button className="btn btn-primary btn-sm float-right" onClick={this.onShowBookDetails}>View Details</button>
+                            <NavLink className="btn btn-primary btn-sm float-right" to={`/book-details/${this.state.book.bookId}`}>View Details</NavLink>
+                            {/* <button className="btn btn-primary btn-sm float-right"  onClick={this.onShowBookDetails}>View Details</button> */}
                         </div>
                     </div>
                 </div>
