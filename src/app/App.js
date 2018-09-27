@@ -24,21 +24,16 @@ class App extends Component {
     if (!userDetail.isLoggedIn) {
       this.growl.show({ severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' })
     } else {
-      this.setUser(userDetail);
-      this.growl.show({ severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' });
+      this.setUserDetialsAndNavigate(userDetail);
     }
   }
 
-  setUser = (userDetail) => {
+  setUserDetialsAndNavigate = (userDetail) => {
     this.getUserDetailsOnLogin(userDetail.username).then((response) => {
       const userInfo = response.data[0];
-      this.setState({
-        isLoggedIn: userDetail.isLoggedIn,
-        username: userDetail.username,
-        userDetail: userInfo
-      });
+      this.updateStateWithUserDetails(userDetail, userInfo);
     }).catch((err) => {
-      this.growl.show(this.growlData.requestFailed)
+      this.growl.show(growlData.requestFailed)
   });
   }
 
@@ -52,6 +47,16 @@ class App extends Component {
       username: ""
     });
     this.growl.show({ severity: 'info', summary: 'Logged Out', detail: 'Thankyou for visiting LMS!' });
+  }
+
+  updateStateWithUserDetails(userDetail, userInfo) {
+    this.setState({
+      isLoggedIn: userDetail.isLoggedIn,
+      username: userDetail.username,
+      userDetail: userInfo
+    },()=>{
+      this.growl.show({ severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' });
+    });
   }
 
   render() {
