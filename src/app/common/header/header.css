@@ -65,7 +65,7 @@
 .logged-user-detail{
     display: block;  
     position: relative;
-    left: 85%;
+    left: 83%;
     margin: 12px 0;
 }
 
@@ -86,5 +86,11 @@
 
     .logged-user-detail{
         display: none;
+    }
+}
+
+@media screen and (max-width: 990px){
+    .logged-user-detail{
+        left: 0%;
     }
 }

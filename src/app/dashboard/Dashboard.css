@@ -58,6 +58,7 @@ div.container{
   }
 
   .das-col-alt{
+    overflow-y: hidden;
     flex: 0 0 55%;
     max-width: 55%;
   }
@@ -85,19 +86,29 @@ div.container{
     left: 5px;
   }
 }
+
+.container-fluid::-webkit-scrollbar{
+  overflow-y: hidden;
+}
+
 ::-webkit-scrollbar-track
 {
-	display: none;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
 }
 
 ::-webkit-scrollbar
 {
-	display: none;
+	width: 12px;
+	background-color: #F5F5F5;
 }
 
 ::-webkit-scrollbar-thumb
-{
-	display: none;
+{	
+  border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #2C3E50;
 }
 
 .nav-item{
