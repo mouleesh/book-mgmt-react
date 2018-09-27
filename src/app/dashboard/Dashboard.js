@@ -36,7 +36,7 @@ class Dashboard extends Component {
     componentDidMount() {
         
         this.getBookDetails().then((response) => {
-            this.setFavouriteBookDetailsAndSetData(response.data);
+            this.setBookDetails(response.data);
         }).catch((err) => {
         });
     }
@@ -45,7 +45,7 @@ class Dashboard extends Component {
         return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/book');
     }
 
-    setFavouriteBookDetailsAndSetData = (bookDetails) => {
+    setBookDetails = (bookDetails) => {
         const favouriteBooks = bookDetails.filter((book) => {    
             return this.state.favBookIds.indexOf(book.id) !== -1;
         })
