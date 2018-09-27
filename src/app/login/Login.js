@@ -16,7 +16,7 @@ export class Login extends Component {
         this.username = React.createRef();
     }
 
-    getUserDetails = (userName) => {
+    getUserDetails = (userName = '') => {
         return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/loginDetail?username=' + userName);
     }
 
@@ -24,20 +24,20 @@ export class Login extends Component {
         this.getUserDetails(username).then((response) => {
             this.setUserDetails(response.data[0]);
         }).catch((err) => {
-            this.growl.show(err)
+            this.growl.show(this.growlData.requestFailed)
         });
     }
 
-    formSubmit = ({ keyCode, type }) => {
+    formSubmit = (event) => {
+        const { keyCode, type } = event;
+        event.preventDefault();
         const password = this.password.current.value;
         this.setIsValueEntered();
         const { username, loginDetails } = this.state;
 
         if (keyCode === 13 || type === "click") {
             const loginInfo = this.checkPasswordAndGetLogInInfo(username, password, loginDetails);
-            console.error("loginInfo");
-            console.error(loginInfo);
-            if(loginInfo){
+            if (loginInfo) {
                 this.props.onLogin(loginInfo);
             } else {
                 this.growl.show(growlData.loginError);
@@ -47,7 +47,7 @@ export class Login extends Component {
 
     checkPasswordAndGetLogInInfo = (username, password, loginDetails) => {
         if (username && password.length > 0) {
-        
+
             const isLoggedIn = (loginDetails.password === password);
             const loginInfo = {
                 username: username,
@@ -66,8 +66,8 @@ export class Login extends Component {
                     username: userLoginDetails.username,
                     loginDetails: userLoginDetails
                 }) :
-        this.setIsValueEntered();
-        
+            this.setIsValueEntered();
+
     }
 
     getCheckClass() {

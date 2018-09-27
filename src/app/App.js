@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Growl } from 'primereact/growl';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
 import './app.css';
 import { Header } from "./common/header/Header";
 import { Footer } from "./common/footer/Footer";
 import { Login } from './login/Login';
-import { userDetails } from "../constant";
 import Dashboard from "./dashboard/Dashboard";
-
+import Axios from 'axios';
+import { growlData } from '../constant';
 
 class App extends Component {
 
@@ -19,11 +18,9 @@ class App extends Component {
       username: "",
       userDetail: {}
     };
-    this.onLogin = this.onLogin.bind(this);
-    this.onLogOut = this.onLogOut.bind(this);
   }
 
-  onLogin(userDetail = {}) {
+  onLogin = (userDetail = {}) => {
     if (!userDetail.isLoggedIn) {
       this.growl.show({ severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' })
     } else {
@@ -32,18 +29,24 @@ class App extends Component {
     }
   }
 
-  setUser(userDetail) {
-    const userInfo = userDetails.filter((userInfo) => {
-      return userInfo.username === userDetail.username;
-    })[0];
-    this.setState({
-      isLoggedIn: userDetail.isLoggedIn,
-      username: userDetail.username,
-      userDetail: userInfo
-    });
+  setUser = (userDetail) => {
+    this.getUserDetailsOnLogin(userDetail.username).then((response) => {
+      const userInfo = response.data[0];
+      this.setState({
+        isLoggedIn: userDetail.isLoggedIn,
+        username: userDetail.username,
+        userDetail: userInfo
+      });
+    }).catch((err) => {
+      this.growl.show(this.growlData.requestFailed)
+  });
   }
 
-  onLogOut() {
+  getUserDetailsOnLogin = (userName) => {
+    return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/user?username=' + userName);
+  }
+
+  onLogOut = () => {
     this.setState({
       isLoggedIn: false,
       username: ""

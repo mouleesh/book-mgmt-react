@@ -1,55 +1,3 @@
-export const loginDetails = [{
-    username: 'titty',
-    password: '12345'
-  },
-  {
-    username: 'tino',
-    password: '12345'
-  },
-  {
-    username: 'krishna',
-    password: '12345'
-  },
-  {
-    username: 'mouli',
-    password: '12345'
-  },
-  {
-    username: 'santhosh',
-    password: '12345'
-  }];
-
-
-  export const userDetails = [{
-    username: 'titty',
-    fullName: 'Titty Titty',
-    bookList: [ 'BK001', 'BK002'],
-    likedBooks: ['BK002', 'BK001']
-  },
-  {
-    username: 'tino',
-    fullName: 'Tino Tino',
-    bookList: ['BK003', 'BK004'],
-    likedBooks: ['BK003']
-  },
-  {
-    username: 'krishna',
-    fullName: 'Krishna Krishna',
-    bookList: ['BK005', 'BK006'],
-    likedBooks: ['BK006']
-  },
-  {
-    username: 'mouli',
-    fullName: 'Mouli Mouli',
-    bookList: ['BK007', 'BK008'],
-    likedBooks: ['BK008']
-  },
-  {
-    username: 'santhosh',
-    fullName: 'Santhosh Santhosh',
-    bookList: ['BK009', 'BK010'],
-    likedBooks: ['BK009']
-  }];
 
   export const bookDetails = [ 
     {
@@ -247,5 +195,6 @@ export const loginDetails = [{
 
   export const growlData = {
     loginSuccess: { severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' },
-    loginError: { severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' }
+    loginError: { severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' },
+    requestFailed: {severity:'error' , summary: 'Invalid Request', detail: 'The request is invalid !'}
   }
