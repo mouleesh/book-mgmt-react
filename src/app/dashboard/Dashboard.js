@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
-import { bookDetails } from '../../constant';
 import './Dashboard.css';
 import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
@@ -8,13 +7,14 @@ import { AddBook } from './addbook/AddBook';
 import { BookDetails } from '../bookDetails/BookDetails';
 import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
+import Axios from 'axios';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            books: bookDetails,
+            books: [],
             favBookIds: [],
             favouriteBooks: [],
             queryText: '',
@@ -32,8 +32,20 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        let favouriteBooks = bookDetails.filter((book) => {
-            return this.state.favBookIds.indexOf(book.bookId) !== -1;
+        
+        this.getBookDetails().then((response) => {
+            this.setFavouriteBookDetailsAndSetData(response.data);
+        }).catch((err) => {
+        });
+    }
+
+    getBookDetails = () => {
+        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/book');
+    }
+
+    setFavouriteBookDetailsAndSetData = (bookDetails) => {
+        const favouriteBooks = bookDetails.filter((book) => {    
+            return this.state.favBookIds.indexOf(book.id) !== -1;
         })
 
         this.setState({

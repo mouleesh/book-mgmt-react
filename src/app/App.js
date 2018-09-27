@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Growl } from 'primereact/growl';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
 import './app.css';
 import { Header } from "./common/header/Header";
 import { Footer } from "./common/footer/Footer";
 import { Login } from './login/Login';
-import { userDetails } from "../constant";
 import Dashboard from "./dashboard/Dashboard";
 import { BookDetails } from './bookDetails/BookDetails';
+import Axios from 'axios';
+import { growlData } from '../constant';
 
 class App extends Component {
 
@@ -19,36 +19,45 @@ class App extends Component {
       username: "",
       userDetail: {}
     };
-    this.onLogin = this.onLogin.bind(this);
-    this.onLogOut = this.onLogOut.bind(this);
   }
 
-  onLogin(userDetail = {}) {
+  onLogin = (userDetail = {}) => {
     if (!userDetail.isLoggedIn) {
-      this.growl.show({ severity: 'error', summary: 'Invalid Credentials', detail: 'Please check the entered credentials.' })
+      this.growl.show(growlData.loginError)
     } else {
-      this.setUser(userDetail);
-      this.growl.show({ severity: 'success', summary: 'Login Success', detail: 'Welcome to LMS!' });
+      this.setUserDetialsAndNavigate(userDetail);
     }
   }
 
-  setUser(userDetail) {
-    const userInfo = userDetails.filter((userInfo) => {
-      return userInfo.username === userDetail.username;
-    })[0];
-    this.setState({
-      isLoggedIn: userDetail.isLoggedIn,
-      username: userDetail.username,
-      userDetail: userInfo
+  setUserDetialsAndNavigate = (userDetail) => {
+    this.getUserDetailsOnLogin(userDetail.username).then((response) => {
+      const userInfo = response.data[0];
+      this.setUserDetails(userDetail, userInfo);
+    }).catch((err) => {
+      this.growl.show(growlData.requestFailed)
     });
   }
 
-  onLogOut() {
+  getUserDetailsOnLogin = (userName) => {
+    return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/user?username=' + userName);
+  }
+
+  onLogOut = () => {
     this.setState({
       isLoggedIn: false,
       username: ""
     });
-    this.growl.show({ severity: 'info', summary: 'Logged Out', detail: 'Thankyou for visiting LMS!' });
+    this.growl.show(growlData.thanks);
+  }
+
+  setUserDetails(userDetail, userInfo) {
+    this.setState({
+      isLoggedIn: userDetail.isLoggedIn,
+      username: userDetail.username,
+      userDetail: userInfo
+    }, () => {
+      this.growl.show(growlData.loginSuccess);
+    });
   }
 
   render() {
