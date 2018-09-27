@@ -58,6 +58,7 @@ div.container{
   }
 
   .das-col-alt{
+    overflow-y: hidden;
     flex: 0 0 55%;
     max-width: 55%;
   }
@@ -84,6 +85,10 @@ div.container{
     right: 0;
     left: 5px;
   }
+}
+
+.container-fluid::-webkit-scrollbar{
+  overflow-y: hidden;
 }
 
 ::-webkit-scrollbar-track

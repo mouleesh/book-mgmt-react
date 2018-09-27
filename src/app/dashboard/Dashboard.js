@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import { bookDetails } from '../../constant';
 import './Dashboard.css';
-import Search from './search/Search'
 import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
 import { AddBook } from './addbook/AddBook';
 import { BookDetails } from '../bookDetails/BookDetails';
+import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
-import SectionWrapper from './sectionWrapper/SectionWrapper';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -163,16 +162,16 @@ class Dashboard extends Component {
                         <div className="row">
                             <BookSearch search={this.search} queryText={this.state.queryText} showBookDetails={this.showBookDetails} filteredBooks={filteredBooks} ></BookSearch>
                             <div className="col dash-col das-col-alt">
-                                <SectionWrapper sectionID="favourites" sectionHeading="Favourite Books">
+                                <Panel sectionID="favourites" sectionHeading="Favourite Books">
                                     <div className="list">
                                         <ul id="favlist-ul">
                                             <BookList showBookDetails={this.showBookDetails} favBooks={this.state.favouriteBooks} />
                                         </ul>
                                     </div>
-                                </SectionWrapper>
-                                <SectionWrapper sectionID="analytics" sectionHeading="Analytics">
+                                </Panel>
+                                <Panel sectionID="analytics" sectionHeading="Analytics">
                                     <Analytics className="analytics-chart" books={this.state.books} />
-                                </SectionWrapper>
+                                </Panel>
                             </div>
                         </div>
                     </div>
