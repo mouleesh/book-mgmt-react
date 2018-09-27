@@ -4,7 +4,6 @@ import './Dashboard.css';
 import BookList from './bookList/BookList';
 import Analytics from './analytics/LikeAnalytics';
 import { AddBook } from './addbook/AddBook';
-import { BookDetails } from '../bookDetails/BookDetails';
 import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
 import Axios from 'axios';
@@ -81,7 +80,7 @@ class Dashboard extends Component {
             <React.Fragment>
                 <div className="container-fluid">
                     <div className="row">
-                        <BookSearch search={this.search} queryText={this.state.queryText} showBookDetails={this.showBookDetails} filteredBooks={filteredBooks} ></BookSearch>
+                        <BookSearch search={this.search} queryText={this.state.queryText} filteredBooks={filteredBooks} ></BookSearch>
                         <div className="col dash-col das-col-alt">
                             <Panel sectionID="favourites" sectionHeading="Favourite Books">
                                 <div className="list">

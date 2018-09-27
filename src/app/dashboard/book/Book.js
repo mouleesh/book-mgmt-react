@@ -7,17 +7,12 @@ class Book extends Component {
         this.state={
             book:{}
         }
-        this.onShowBookDetails = this.onShowBookDetails.bind(this);
     }
 
     static getDerivedStateFromProps(nextProps, prevState){
         return {
             book: nextProps.data
         }
-    }
-
-    onShowBookDetails = () => {
-        this.props.showBookDetails(this.state.book.bookId);
     }
 
     render() {
@@ -38,8 +33,7 @@ class Book extends Component {
                         <div className="card-header"><span><b>{bookName}</b> By {author}</span></div>
                         <div className="card-body"><p>{description}</p></div>
                         <div className="card-footer">
-                            <NavLink className="btn btn-primary btn-sm float-right" to={`/book-details/${this.state.book.bookId}`}>View Details</NavLink>
-                            {/* <button className="btn btn-primary btn-sm float-right"  onClick={this.onShowBookDetails}>View Details</button> */}
+                            <NavLink className="btn btn-primary btn-sm float-right" to={`/book-details/${this.state.book.id}`}>View Details</NavLink>
                         </div>
                     </div>
                 </div>
