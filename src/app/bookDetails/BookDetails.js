@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FaThumbsUp, FaThumbsDown, FaArrowLeft } from 'react-icons/fa';
 import Comment from './comment/Comment';
 import Axios from 'axios';
+import { APIserverURL } from '../../constant';
 
 export class BookDetails extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export class BookDetails extends Component {
     }
 
     setIsLiked = (bookId) => {
-        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/user?username=' + this.getCurrentLoggedInUser())
+        return Axios.get(APIserverURL.userAPI+'?username=' + this.getCurrentLoggedInUser())
         .then(res => {
             this.setState({
                 isLike: res.data[0].likedBooks.indexOf(bookId) > -1

@@ -8,7 +8,7 @@ import { Login } from './login/Login';
 import Dashboard from "./dashboard/Dashboard";
 import { BookDetails } from './bookDetails/BookDetails';
 import Axios from 'axios';
-import { growlData } from '../constant';
+import { growlData, APIserverURL } from '../constant';
 
 class App extends Component {
 
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   getUserDetailsOnLogin = (userName) => {
-    return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/user?username=' + userName);
+    return Axios.get(APIserverURL.userAPI+'?username=' + userName);
   }
 
   onLogOut = () => {

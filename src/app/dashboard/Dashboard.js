@@ -7,6 +7,8 @@ import { AddBook } from './addbook/AddBook';
 import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
 import Axios from 'axios';
+import { Growl } from 'primereact/growl';
+import { growlData, APIserverURL } from '../../constant';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -31,19 +33,26 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        
+
         this.getBookDetails().then((response) => {
             this.setBookDetails(response.data);
         }).catch((err) => {
         });
     }
 
+    /**
+     * This functions is to make axios call to get book details
+     */
     getBookDetails = () => {
-        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/book');
+        return Axios.get(APIserverURL.bookAPI);
     }
-
+    
+    /**
+     * This functio will set the state for book
+     * @param  {object} bookDetails
+     */
     setBookDetails = (bookDetails) => {
-        const favouriteBooks = bookDetails.filter((book) => {    
+        const favouriteBooks = bookDetails.filter((book) => {
             return this.state.favBookIds.indexOf(book.id) !== -1;
         })
 
@@ -57,13 +66,49 @@ class Dashboard extends Component {
         this.setState({ queryText: searchText });
     }
 
+    /**
+     * This function is to add a new book and update the state
+     * @param {object} newBook 
+     */
     addBook(newBook = {}) {
         this.setState({
-            books: [
-                ...this.state.books,
-                newBook
-            ]
+            books: [...this.state.books, newBook]
+        });
+        this.postBookDetailsInServer(newBook);
+    }
+    
+    /**
+     * @param  {object} newBook
+     * This function will post the book details in server 
+     */
+    postBookDetailsInServer = (newBook) => {
+        Axios.post(APIserverURL.bookAPI, newBook)
+            .then(res => {
+                if (res.status === 201) {
+                    this.growl.show(growlData.bookAdded);
+                } else {
+                    this.removeBookOnPostFailure(newBook.id);
+                }
+            }).catch(() => {
+                this.removeBookOnPostFailure(newBook.id);
+            });
+    }
+
+    /**
+     * @param  {string} bookID
+     * This function will reomve book details from state if the post is failed in API server
+     */
+    removeBookOnPostFailure = (bookID) => {
+        const updatedBooks = this.state.books.filter((book) => {
+            if (book.bookID !== bookID) {
+                return book;
+            }
         })
+        this.setState({
+            books: updatedBooks
+        }), () => {
+            this.growl.show(growlData.bookRemoved);
+        };
     }
 
     render() {
@@ -78,6 +123,7 @@ class Dashboard extends Component {
         });
         return (
             <React.Fragment>
+                <Growl ref={el => { this.growl = el }} />
                 <div className="container-fluid">
                     <div className="row">
                         <BookSearch search={this.search} queryText={this.state.queryText} filteredBooks={filteredBooks} ></BookSearch>
@@ -95,7 +141,7 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
-                <AddBook bookDetails={this.state.books} addBook={this.addBook} />            
+                <AddBook bookDetails={this.state.books} addBook={this.addBook} />
                 <FaPlusCircle className="addBtn" data-toggle="modal" data-target="#bookModal" />
             </React.Fragment>
         );

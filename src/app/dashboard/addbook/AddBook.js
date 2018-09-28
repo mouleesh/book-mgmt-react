@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Growl } from "primereact/growl";
+import { growlData } from '../../../constant';
 
 export class AddBook extends Component {
 
@@ -40,11 +41,11 @@ export class AddBook extends Component {
         let bookId;
         let isBookIDExist = true;
         let bookIdSufix = 100;
-        
+
         for (let i = 0; i < 20 && isBookIDExist; i++) {
             bookId = bookIdPrefix + bookIdSufix;
             const bookExists = this.checkBookId(bookId);
-            
+
             if (bookExists) {
                 isBookIDExist = true;
             } else {
@@ -58,7 +59,7 @@ export class AddBook extends Component {
     handleSubmit(e) {
 
         const newBook = {
-            bookId: this.getBookId(),
+            id: this.getBookId(),
             likes: 0,
             bookName: this.bookName,
             comments: [],
@@ -73,12 +74,12 @@ export class AddBook extends Component {
                 this.authorName = "";
                 this.description = "";
                 this.addBookForm.reset();
-                this.growl.show({ severity: 'success', summary: 'Success', detail: 'Added Book Successfully' });
+                
             } else {
-                this.growl.show({ severity: 'error', summary: 'Oops!', detail: 'Please fill Book Name, Author and Description.' });
+                this.growl.show(growlData.fillBookDetails);
             }
         } else {
-            this.growl.show({ severity: 'error', summary: 'Book Already Exists!', detail: 'Please provide a different book name.' });
+            this.growl.show(growlData.fillBookName);
         }
 
     }
@@ -86,8 +87,8 @@ export class AddBook extends Component {
     render() {
         return (
             <React.Fragment>
-                <Growl ref={el => { this.growl = el }} />
-                <div className="modal fade" id="bookModal" tabIndex="-1" role="dialog" aria-labelledby="addBookModal" aria-hidden="true">                        
+                    <Growl ref={el => { this.growl = el }} />                    
+                    <div className="modal fade" id="bookModal" tabIndex="-1" role="dialog" aria-labelledby="addBookModal" aria-hidden="true">                        
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header heading">
@@ -96,39 +97,39 @@ export class AddBook extends Component {
                             <div className="modal-body">
                                 <form ref={el => { this.addBookForm = el }}>
 
-                <div className="form-row">
-                    <div className="col">
-                        <div className="form-group">
-                            <label htmlFor="bookName">Name</label>
-                            <input
-                                id="bookName"
-                                type="text"
-                                className="form-control"
-                                onChange={e => this.bookNameCheck(e.target.value)} />
-                        </div>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col">
-                        <div className="form-group">
-                            <label htmlFor="authorName">Author</label>
-                            <input id="authorName" type="text" className="form-control"
-                                onChange={e => { this.authorName = e.target.value }} />
-                        </div>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col">
-                        <div className="form-group">
-                            <label htmlFor="bookDescription">Description</label>
-                            <textarea className="form-control" id="bookDescription" rows="3"
-                                onChange={e => { this.description = e.target.value }}></textarea>
-                        </div>
-                    </div>
-                </div>
-                <button className="btn btn-primary" type="button" onClick={this.handleSubmit}>Add Book</button>
-                <button className="btn" type="reset" style={{ float: "right" }}> Clear </button>
-            </form>
+                                    <div className="form-row">
+                                        <div className="col">
+                                            <div className="form-group">
+                                                <label htmlFor="bookName">Name</label>
+                                                <input
+                                                    id="bookName"
+                                                    type="text"
+                                                    className="form-control"
+                                                    onChange={e => this.bookNameCheck(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="col">
+                                            <div className="form-group">
+                                                <label htmlFor="authorName">Author</label>
+                                                <input id="authorName" type="text" className="form-control"
+                                                    onChange={e => { this.authorName = e.target.value }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="col">
+                                            <div className="form-group">
+                                                <label htmlFor="bookDescription">Description</label>
+                                                <textarea className="form-control" id="bookDescription" rows="3"
+                                                    onChange={e => { this.description = e.target.value }}></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-primary" type="button" onClick={this.handleSubmit}>Add Book</button>
+                                    <button className="btn" type="reset" style={{ float: "right" }}> Clear </button>
+                                </form>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

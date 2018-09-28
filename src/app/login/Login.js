@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Growl } from 'primereact/growl';
-import { growlData } from "../../constant";
+import { growlData, APIserverURL } from "../../constant";
 import './login.css';
 import Axios from "axios";
 
@@ -17,7 +17,7 @@ export class Login extends Component {
     }
 
     getUserDetails = (userName = '') => {
-        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/loginDetail?username=' + userName);
+        return Axios.get(APIserverURL.loginAPI+'?username=' + userName);
     }
 
     userNameCheck = (username) => {
