@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Growl } from 'primereact/growl';
 import { Router } from 'react-router';
 import './app.css';
 import Header from "./common/header/Header";
@@ -17,7 +16,6 @@ class App extends Component {
         <div className="App">
           <Header history={history}/>
           <main className="App-content">
-            <Growl ref={(el) => this.growl = el}></Growl>
             <AppRouter />
           </main>
           <Footer />
