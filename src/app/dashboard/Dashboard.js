@@ -40,6 +40,10 @@ class Dashboard extends Component {
         //this state property on the location will be set only when we are redirecting from the login formsubmit. 
         if(this.props.location.state && this.props.location.state.showLoginSuccessGrowl){
             this.growl.show(growlData.loginSuccess);
+            this.props.history.replace({
+                pathname: '/dashboard',
+                state: {}
+            });
         }
     }
 
