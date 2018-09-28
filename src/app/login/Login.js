@@ -18,6 +18,13 @@ export class Login extends Component {
         this.username = React.createRef();
     }
 
+    componentDidMount() {
+        //this state property on the location will be set only when we are redirecting from the logout button click. 
+        if(this.props.location.state && this.props.location.state.showLogoutThankGrowl){
+            this.growl.show(growlData.thanks);
+        }
+    }
+
     getUserDetails = (userName = '') => {
         return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/loginDetail?username=' + userName);
     }
@@ -100,7 +107,10 @@ export class Login extends Component {
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
-            return <Redirect to='/dashboard' />;
+            return <Redirect to={{
+                pathname: '/dashboard',
+                state: { showLoginSuccessGrowl: true }
+            }} />;
         }
 
         return (

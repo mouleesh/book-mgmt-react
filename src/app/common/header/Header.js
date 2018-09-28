@@ -11,7 +11,10 @@ class Header extends Component{
 
     onLogout = () => {
         logout();
-        this.props.history.push('/');
+        this.props.history.push({
+            pathname: '/',
+            state: { showLogoutThankGrowl: true }
+          });
     }
 
     render(){
@@ -29,7 +32,7 @@ class Header extends Component{
                     <div className="dropdown">
                         <FaBars className="user-info" />
                         <div className="dropdown-content">
-                            <b className="m-3">{getCurrentLoggedInUser}</b>
+                            <b className="m-3">{getCurrentLoggedInUser()}</b>
                             <a onClick={this.onLogout}>SignOut</a>
                         </div>
                     </div>

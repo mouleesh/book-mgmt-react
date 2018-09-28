@@ -8,6 +8,8 @@ import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
 import {getUserDetails} from './../common/services/UserService';
 import {getBookDetails} from './../common/services/BookService';
+import { Growl } from 'primereact/growl';
+import { growlData } from "../../constant";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -33,6 +35,11 @@ class Dashboard extends Component {
         }).catch((err) => {
             console.log(err);
         });
+        
+        //this state property on the location will be set only when we are redirecting from the login formsubmit. 
+        if(this.props.location.state && this.props.location.state.showLoginSuccessGrowl){
+            this.growl.show(growlData.loginSuccess);
+        }
     }
 
     setBookDetails = (bookDetails) => {
@@ -77,6 +84,7 @@ class Dashboard extends Component {
         });
         return (
             <React.Fragment>
+                <Growl ref={el => { this.growl = el }} />
                 <div className="container-fluid">
                     <div className="row">
                         <BookSearch search={this.search} queryText={this.state.queryText} filteredBooks={filteredBooks} ></BookSearch>
