@@ -6,7 +6,8 @@ import Analytics from './analytics/LikeAnalytics';
 import { AddBook } from './addbook/AddBook';
 import Panel from './panel/Panel';
 import BookSearch from './bookSearch/bookSearch';
-import Axios from 'axios';
+import {getUserDetails} from './../common/services/UserService';
+import {getBookDetails} from './../common/services/BookService';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -23,23 +24,15 @@ class Dashboard extends Component {
         this.addBook = this.addBook.bind(this);
     }
 
-    static getDerivedStateFromProps({ favBookIds, username }, perviousState) {
-        return {
-            favBookIds: favBookIds,
-            username: username
-        }
-    }
-
     componentDidMount() {
-        
-        this.getBookDetails().then((response) => {
+        getUserDetails().then((response) => {
+            this.setUserDetails(response.data[0]);
+            return getBookDetails();
+        }).then((response) => {
             this.setBookDetails(response.data);
         }).catch((err) => {
+            console.log(err);
         });
-    }
-
-    getBookDetails = () => {
-        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/book');
     }
 
     setBookDetails = (bookDetails) => {
@@ -51,6 +44,12 @@ class Dashboard extends Component {
             books: bookDetails,
             favouriteBooks: favouriteBooks
         });
+    }
+
+    setUserDetails = (userDetails) => {
+            this.setState({
+                favBookIds: userDetails.likedBooks
+            });
     }
 
     search(searchText) {

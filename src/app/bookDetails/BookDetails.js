@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FaThumbsUp, FaThumbsDown, FaArrowLeft } from 'react-icons/fa';
 import Comment from './comment/Comment';
 import Axios from 'axios';
+import {NavLink} from 'react-router-dom';
 
 export class BookDetails extends Component {
     constructor(props) {
@@ -20,7 +21,6 @@ export class BookDetails extends Component {
     }
     
     getCurrentLoggedInUser(){
-        localStorage.setItem('username', 'tino'); //TODO, remove this once this is done at login phase.
         return localStorage.getItem('username');
     }
 
@@ -54,7 +54,7 @@ export class BookDetails extends Component {
         }).catch(err => {
             //TODO: handle error here
         });
-        this.getImageUrl();
+        this.setImageUrl();
     }
 
     getBookDetailsByBookID(bookId) {
@@ -99,7 +99,7 @@ export class BookDetails extends Component {
         
     }
 
-    getImageUrl = () => {
+    setImageUrl = () => {
         this.setState({
             image: "https://picsum.photos/320/240/?image=" + Math.round(Math.random()*1000)
         });
@@ -112,6 +112,7 @@ export class BookDetails extends Component {
 
         return (
             <div>
+                <NavLink id="backToDash" to={'/dashboard'} className="btn btn-primary btn-sm"> <FaArrowLeft /> Back </NavLink>
                 <div className="container" style={{padding: "10px"}} >
                     <div className="row">
                         <div className="col-md-4">
