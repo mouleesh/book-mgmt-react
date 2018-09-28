@@ -11,7 +11,8 @@ export const growlData = {
 }
 
 export const APIserverURL = {
-  bookAPI: 'https://my-json-server.typicode.com/vcoderz/lms-json-api/book',
+  bookAPI: 'https://my-json-server.typicode.com/vcoderz/lms-json-api/book/',
   loginAPI: 'https://my-json-server.typicode.com/vcoderz/lms-json-api/loginDetail',
-  userAPI: 'https://my-json-server.typicode.com/vcoderz/lms-json-api/user'
+  userAPI: 'https://my-json-server.typicode.com/vcoderz/lms-json-api/user',
+  bookImageURL: 'https://picsum.photos/320/240/?image='
 }

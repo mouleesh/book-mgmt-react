@@ -9,6 +9,8 @@ import BookSearch from './bookSearch/bookSearch';
 import Axios from 'axios';
 import { Growl } from 'primereact/growl';
 import { growlData, APIserverURL } from '../../constant';
+import {getUserDetails} from './../common/services/UserService';
+import {getBookDetails} from './../common/services/BookService';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -25,18 +27,14 @@ class Dashboard extends Component {
         this.addBook = this.addBook.bind(this);
     }
 
-    static getDerivedStateFromProps({ favBookIds, username }, perviousState) {
-        return {
-            favBookIds: favBookIds,
-            username: username
-        }
-    }
-
     componentDidMount() {
-
-        this.getBookDetails().then((response) => {
+        getUserDetails().then((response) => {
+            this.setUserDetails(response.data[0]);
+            return getBookDetails();
+        }).then((response) => {
             this.setBookDetails(response.data);
         }).catch((err) => {
+            console.log(err);
         });
     }
 
@@ -62,6 +60,12 @@ class Dashboard extends Component {
         });
     }
 
+    setUserDetails = (userDetails) => {
+            this.setState({
+                favBookIds: userDetails.likedBooks
+            });
+    }
+
     search(searchText) {
         this.setState({ queryText: searchText });
     }
@@ -76,7 +80,7 @@ class Dashboard extends Component {
         });
         this.postBookDetailsInServer(newBook);
     }
-    
+
     /**
      * @param  {object} newBook
      * This function will post the book details in server 

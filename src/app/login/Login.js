@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Redirect } from 'react-router-dom';
 import { Growl } from 'primereact/growl';
 import { growlData, APIserverURL } from "../../constant";
 import './login.css';
@@ -10,10 +11,18 @@ export class Login extends Component {
         this.state = {
             loginDetails: [],
             username: null,
-            isValueEntered: false
+            isValueEntered: false,
+            redirectToReferrer: false
         };
         this.password = React.createRef();
         this.username = React.createRef();
+    }
+
+    componentDidMount() {
+        //this state property on the location will be set only when we are redirecting from the logout button click. 
+        if(this.props.location.state && this.props.location.state.showLogoutThankGrowl){
+            this.growl.show(growlData.thanks);
+        }
     }
 
     getUserDetails = (userName = '') => {
@@ -38,7 +47,8 @@ export class Login extends Component {
         if (keyCode === 13 || type === "click") {
             const loginInfo = this.checkPasswordAndGetLogInInfo(username, password, loginDetails);
             if (loginInfo) {
-                this.props.onLogin(loginInfo);
+                localStorage.setItem('username', loginInfo.username);
+                this.setState({ redirectToReferrer: true });
             } else {
                 this.growl.show(growlData.loginError);
             }
@@ -93,6 +103,15 @@ export class Login extends Component {
     render() {
         let manageBtnIcon = "btn btn-login btn-cursor-";
         manageBtnIcon = this.state.isValueEntered ? manageBtnIcon += 'pointer' : manageBtnIcon += 'not-allowed';
+
+        const { redirectToReferrer } = this.state;
+
+        if (redirectToReferrer) {
+            return <Redirect to={{
+                pathname: '/dashboard',
+                state: { showLoginSuccessGrowl: true }
+            }} />;
+        }
 
         return (
             <Fragment>

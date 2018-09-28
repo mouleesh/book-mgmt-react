@@ -3,10 +3,14 @@ import { FaThumbsUp, FaThumbsDown, FaArrowLeft } from 'react-icons/fa';
 import Comment from './comment/Comment';
 import Axios from 'axios';
 import { APIserverURL } from '../../constant';
+import {NavLink} from 'react-router-dom';
+import {Growl} from 'primereact/growl';
 
 export class BookDetails extends Component {
     constructor(props) {
         super(props);
+
+        this.commentTextForwardRef = React.createRef();
 
         this.state = {
             image: '',
@@ -21,7 +25,6 @@ export class BookDetails extends Component {
     }
     
     getCurrentLoggedInUser(){
-        localStorage.setItem('username', 'tino'); //TODO, remove this once this is done at login phase.
         return localStorage.getItem('username');
     }
 
@@ -55,11 +58,11 @@ export class BookDetails extends Component {
         }).catch(err => {
             //TODO: handle error here
         });
-        this.getImageUrl();
+        this.setImageUrl();
     }
 
     getBookDetailsByBookID(bookId) {
-        return Axios.get('https://my-json-server.typicode.com/vcoderz/lms-json-api/book/'+ bookId);
+        return Axios.get(APIserverURL.bookAPI+ bookId);
     }
 
     onLike = () => {
@@ -68,7 +71,7 @@ export class BookDetails extends Component {
             toLike: this.state.isLike
         };
 
-        Axios.patch('https://my-json-server.typicode.com/vcoderz/lms-json-api/book/'+ bookId, payload)
+        Axios.patch(APIserverURL.bookAPI+ bookId, payload)
         .then(res => {
             this.setState({
                 isLike: !this.state.isLike,
@@ -79,7 +82,13 @@ export class BookDetails extends Component {
         });
     }
 
-    onComment = (commentText) => {
+    onComment = (commentRef) => {
+        const commentText = commentRef.current.value;
+        if (commentText === '') {
+            this.growl.show({ severity: 'error', summary: 'Comment Required', detail: 'Please enter the comment!' });
+            return;
+        }
+
         const bookId = this.state.bookId;
         const payload = {
             description: commentText,
@@ -94,15 +103,16 @@ export class BookDetails extends Component {
             this.setState({
                 comments: updatedComments
             });
+            commentRef.current.value = '';
         }).catch(err => {
-            //TODO: handle error here
+            this.growl.show({ severity: 'error', summary: 'Comment Not Saved', detail: 'Please try later!' });
         });
         
     }
 
-    getImageUrl = () => {
+    setImageUrl = () => {
         this.setState({
-            image: "https://picsum.photos/320/240/?image=" + Math.round(Math.random()*1000)
+            image: APIserverURL.bookImageURL + Math.round(Math.random()*1000)
         });
     }
 
@@ -113,6 +123,8 @@ export class BookDetails extends Component {
 
         return (
             <div>
+                <Growl ref={(el) => this.growl = el} />
+                <NavLink id="backToDash" to={'/dashboard'} className="btn btn-primary btn-sm"> <FaArrowLeft /> Back </NavLink>
                 <div className="container" style={{padding: "10px"}} >
                     <div className="row">
                         <div className="col-md-4">
@@ -143,7 +155,7 @@ export class BookDetails extends Component {
                     <br />
                     <div className="row">
                         <div className="col-md-12">
-                            <Comment comments={comments} bookId={bookId} onComment={this.onComment} />
+                            <Comment commentRef={this.commentTextForwardRef} comments={comments} bookId={bookId} onComment={this.onComment} />
                         </div>
                     </div>
                 </div>
