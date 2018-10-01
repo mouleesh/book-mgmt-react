@@ -4,6 +4,7 @@ import PrivateRoute from './PrivateRouter';
 import { Login } from '../login/Login';
 import Dashboard from '../dashboard/Dashboard';
 import { BookDetails } from '../bookDetails/BookDetails';
+import NotFound from '../common/notFound/NotFound';
 
 class AppRouter extends Component{
     render(){
@@ -12,6 +13,7 @@ class AppRouter extends Component{
               <Route exact path="/" component={Login} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/book-details/:book_id" component={BookDetails} />
+              <Route component={NotFound} />
             </Switch>
         );
     }
