@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './PrivateRouter';
 import { Login } from '../login/Login';
 import Dashboard from '../dashboard/Dashboard';
-import { BookDetails } from '../bookDetails/BookDetails';
+import BookDetails from '../bookDetails/BookDetails';
 import NotFound from '../common/notFound/NotFound';
 
 class AppRouter extends Component{

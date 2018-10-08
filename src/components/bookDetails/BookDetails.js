@@ -5,8 +5,10 @@ import Axios from 'axios';
 import { APIserverURL } from '../../constant';
 import {NavLink} from 'react-router-dom';
 import {Growl} from 'primereact/growl';
+import { connect } from 'react-redux';
+import { retrieveBookByIdAction } from './../../actions/BookDetailAction';
 
-export class BookDetails extends Component {
+class BookDetails extends Component {
     constructor(props) {
         super(props);
 
@@ -40,6 +42,9 @@ export class BookDetails extends Component {
     }
 
     componentDidMount() {
+        this.props.retrieveBookByIdAction();
+        console.log(this.props);
+        console.log(this.state);
         const bookId = this.props.match.params.book_id;
         
         this.getBookDetailsByBookID(bookId).then(res => {
@@ -163,4 +168,12 @@ export class BookDetails extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    ...state
+})
 
+const mapDispatchToProps = dispatch => ({
+    retrieveBookByIdAction: () => dispatch(retrieveBookByIdAction())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);
