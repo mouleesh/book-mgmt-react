@@ -16,12 +16,6 @@ class BookDetails extends Component {
 
         this.state = {
             image: '',
-            bookName: '',
-            bookId: '',
-            comments: [],
-            likes: '',
-            author: '',
-            description: '',
             isLike: ''
         }
     }
@@ -42,32 +36,9 @@ class BookDetails extends Component {
     }
 
     componentDidMount() {
-        this.props.retrieveBookByIdAction();
-        console.log(this.props);
-        console.log(this.state);
-        const bookId = this.props.match.params.book_id;
+        this.props.retrieveBookByIdAction(this.props.match.params.book_id);
         
-        this.getBookDetailsByBookID(bookId).then(res => {
-            const {bookName, author, description, likes, comments} = res.data;
-            
-            this.setState({
-                bookId,
-                bookName,
-                author,
-                description,
-                likes,
-                comments
-            });
-
-            this.setIsLiked(bookId);
-        }).catch(err => {
-            //TODO: handle error here
-        });
         this.setImageUrl();
-    }
-
-    getBookDetailsByBookID(bookId) {
-        return Axios.get(APIserverURL.bookAPI+ bookId);
     }
 
     onLike = () => {
@@ -122,7 +93,7 @@ class BookDetails extends Component {
     }
 
     render() {
-        let { bookName, bookId, comments, likes, author, description } = this.state;
+        let { bookName, bookId, comments, likes, author, description } = this.props.bookDetail;
 
         const LikeButtonText = () => { return this.state.isLike ? <FaThumbsDown /> : <FaThumbsUp /> };
 
@@ -168,12 +139,14 @@ class BookDetails extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    ...state
-})
+const mapStateToProps = state => {
+    return {
+        bookDetail: state.BookDetailReducer.bookDetail
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
-    retrieveBookByIdAction: () => dispatch(retrieveBookByIdAction())
+    retrieveBookByIdAction: (bookId) => dispatch(retrieveBookByIdAction(bookId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);
