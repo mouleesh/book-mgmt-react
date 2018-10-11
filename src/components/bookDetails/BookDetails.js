@@ -7,6 +7,7 @@ import {NavLink} from 'react-router-dom';
 import {Growl} from 'primereact/growl';
 import { connect } from 'react-redux';
 import { retrieveBookByIdAction } from './../../actions/BookDetailAction';
+import { addCommentByIdAction } from './../../actions/BookDetailAction';
 
 class BookDetails extends Component {
     constructor(props) {
@@ -58,32 +59,16 @@ class BookDetails extends Component {
         });
     }
 
-    onComment = (commentRef) => {
-        const commentText = commentRef.current.value;
-        if (commentText === '') {
+    onComment = (bookId, commentRef) => {
+        const comment = commentRef.current.value;
+        if (comment === '') {
             this.growl.show({ severity: 'error', summary: 'Comment Required', detail: 'Please enter the comment!' });
             return;
         }
-
-        const bookId = this.state.bookId;
-        const payload = {
-            description: commentText,
-            commentedAt: (new Date()).toLocaleString(),
-            username: this.getCurrentLoggedInUser()
-        };
-
-        Axios.patch('https://my-json-server.typicode.com/vcoderz/lms-json-api/book/'+ bookId, payload)
-        .then(res => {
-            const updatedComments = [...this.state.comments, payload];
-    
-            this.setState({
-                comments: updatedComments
-            });
-            commentRef.current.value = '';
-        }).catch(err => {
-            this.growl.show({ severity: 'error', summary: 'Comment Not Saved', detail: 'Please try later!' });
-        });
         
+        this.props.addCommentByIdAction(bookId, comment);
+        
+        commentRef.current.value = '';
     }
 
     setImageUrl = () => {
@@ -146,7 +131,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    retrieveBookByIdAction: (bookId) => dispatch(retrieveBookByIdAction(bookId))
+    retrieveBookByIdAction: (bookId) => dispatch(retrieveBookByIdAction(bookId)),
+    addCommentByIdAction: (bookId, comment) => dispatch(addCommentByIdAction(bookId, comment))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);

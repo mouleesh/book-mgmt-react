@@ -20,6 +20,16 @@ export default (state = initialState, action) => {
                     ...action.payload
                 }
             }
+
+        case 'ADD_COMMENT':
+            return {
+                ...state,
+                bookDetail: {
+                    ...state.bookDetail,
+                    comments: [...state.bookDetail.comments, action.payload]
+                }
+            }
+
         default:
             return state
     }

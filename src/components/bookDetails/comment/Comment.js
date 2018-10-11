@@ -12,7 +12,7 @@ const Comment = (props) => {
                     </div>
                 </div>
                 <div className="col-md-12">
-                    <button  className="btn btn-primary btn-sm" style={{ float: "right" }} onClick={() => props.onComment(props.commentRef)}> comment <FaComment /> </button>
+                    <button  className="btn btn-primary btn-sm" style={{ float: "right" }} onClick={() => props.onComment(props.bookId, props.commentRef)}> comment <FaComment /> </button>
                 </div>
 
                 <br/><br/>
